@@ -1,0 +1,442 @@
+{
+  "when": "2026-11-12T19:48:53.144Z",
+  "model": "z-ai/glm-5.3-flash",
+  "noGate": false,
+  "results": [
+    {
+      "case": "A",
+      "shows": "A well-supported lead",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "His paediatrician confirmed that the person is not acutely unwell.",
+            "fact": 5
+          }
+        ],
+        "news2": null
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 19249,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 701,
+        "total_tokens": 927,
+        "completion_tokens": 226,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 6147,
+      "inferenceId": "8c2750dd-cf22-503d-93a7-f109b5e639d9",
+      "replyId": "bd0a79bac288460a9fe3b4f13b8f61be",
+      "text": "{\"lead\":{\"explanation\":\"Progressive proximal weakness with Gowers sign and markedly raised creatine kinase suggests a dystrophinopathy; the MLPA found no exon-level copy-number change, so a small sequence change in DMD remains possible.\",\"confidence\":\"moderate\",\"facts\":[1,2,3,4]},\"gaps\":[{\"gap\":\"MLPA cannot detect single-letter changes or small insertions/deletions in DMD, so the underlying variant may be missed.\",\"facts\":[3,4]},{\"gap\":\"No formal muscle examination, biopsy findings, or family history are reported.\",\"facts\":[1]}],\"next_check\":{\"type\":\"test\",\"check\":\"DMD gene sequencing covering all 79 exons plus flanking intronic regions to detect single-letter changes and small insertions/deletions.\",\"why\":\"The MLPA only excluded whole-exon deletions or duplications; sequencing is needed to find the small changes it cannot detect.\",\"facts\":[3,4],\"cannot_show\":\"Deep intronic, splice-region variants outside the covered regions, and other dystrophy genes that could explain the phenotype.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Progressive proximal weakness with Gowers sign and markedly raised creatine kinase suggests a dystrophinopathy; the MLPA found no exon-level copy-number change, so a small sequence change in DMD remains possible.",
+          "confidence": "moderate",
+          "facts": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "MLPA cannot detect single-letter changes or small insertions/deletions in DMD, so the underlying variant may be missed.",
+            "facts": [
+              3,
+              4
+            ]
+          },
+          {
+            "gap": "No formal muscle examination, biopsy findings, or family history are reported.",
+            "facts": [
+              1
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "DMD gene sequencing covering all 79 exons plus flanking intronic regions to detect single-letter changes and small insertions/deletions.",
+          "why": "The MLPA only excluded whole-exon deletions or duplications; sequencing is needed to find the small changes it cannot detect.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "Deep intronic, splice-region variants outside the covered regions, and other dystrophy genes that could explain the phenotype."
+        }
+      },
+      "sourceClassifications": [],
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with moderate confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Variant classifications come only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves variant classifications to the source report."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true,
+      "costUsd": 0.00016908
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 22708,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 722,
+        "total_tokens": 913,
+        "completion_tokens": 191,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 6245,
+      "inferenceId": "2d2e2034-6655-581a-8f1c-e8f8d6d3a410",
+      "replyId": "8731c0be1ae44289aebf821498dd2d54",
+      "text": "{\"lead\":{\"explanation\":\"Late-onset pattern with proximal weakness plus two reported GAA variants in trans is consistent with a biallelic GAA-related neuromuscular condition, though phase is unconfirmed.\",\"confidence\":\"moderate\",\"facts\":[1,3,4]},\"gaps\":[{\"gap\":\"Phase of the two GAA variants is unestablished, so biallelic status is not confirmed.\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result is available to support the molecular findings.\",\"facts\":[4]}],\"next_check\":{\"type\":\"test\",\"check\":\"GAA enzyme activity assay, ideally with phasing analysis of the two variants (e.g. parental testing or long-read methods).\",\"why\":\"Confirms biallelic involvement and functional support for the reported findings.\",\"facts\":[3,4],\"cannot_show\":\"Disease severity, progression rate, or current cardiac and respiratory involvement.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Late-onset pattern with proximal weakness plus two reported GAA variants in trans is consistent with a biallelic GAA-related neuromuscular condition, though phase is unconfirmed.",
+          "confidence": "moderate",
+          "facts": [
+            1,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Phase of the two GAA variants is unestablished, so biallelic status is not confirmed.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result is available to support the molecular findings.",
+            "facts": [
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "GAA enzyme activity assay, ideally with phasing analysis of the two variants (e.g. parental testing or long-read methods).",
+          "why": "Confirms biallelic involvement and functional support for the reported findings.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "Disease severity, progression rate, or current cardiac and respiratory involvement."
+        }
+      },
+      "sourceClassifications": [
+        {
+          "variant": "GAA c.-32-13T>G",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        },
+        {
+          "variant": "GAA c.2560C>T (p.Arg854Ter)",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        }
+      ],
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with moderate confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Variant classifications come only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves variant classifications to the source report."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true,
+      "costUsd": 0.00015326
+    },
+    {
+      "case": "C",
+      "shows": "Too little evidence for a lead",
+      "expect": "insufficient",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "The clinic's intake nurse confirmed that the person is not acutely unwell.",
+            "fact": 5
+          }
+        ],
+        "news2": null
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 6165,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 663,
+        "total_tokens": 817,
+        "completion_tokens": 154,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 5953,
+      "inferenceId": "a674fb88-2c47-5f47-abf9-d94f0e249da8",
+      "replyId": "c9ce69e1fe3c4e448d3dc802d9b9e07b",
+      "text": "{\"lead\":null,\"gaps\":[{\"gap\":\"No history, examination or symptom timeline exists; 'tired' is undefined.\",\"facts\":[1,3]},{\"gap\":\"No clinical genetic test report is on file; the app summary does not specify genes or variants tested.\",\"facts\":[2,4]}],\"next_check\":{\"type\":\"evidence\",\"check\":\"Arrange a paediatric history and examination covering exercise tolerance, fatigue character, timeline, strength testing and general physical findings.\",\"why\":\"The child is otherwise well, so no urgent handover is needed; the symptom is undefined and no clinical assessment exists.\",\"facts\":[1,3,5],\"cannot_show\":\"It cannot establish or exclude any genetic cause, and cannot interpret the unverified consumer app findings.\"}}",
+      "brief": {
+        "lead": null,
+        "gaps": [
+          {
+            "gap": "No history, examination or symptom timeline exists; 'tired' is undefined.",
+            "facts": [
+              1,
+              3
+            ]
+          },
+          {
+            "gap": "No clinical genetic test report is on file; the app summary does not specify genes or variants tested.",
+            "facts": [
+              2,
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "evidence",
+          "check": "Arrange a paediatric history and examination covering exercise tolerance, fatigue character, timeline, strength testing and general physical findings.",
+          "why": "The child is otherwise well, so no urgent handover is needed; the symptom is undefined and no clinical assessment exists.",
+          "facts": [
+            1,
+            3,
+            5
+          ],
+          "cannot_show": "It cannot establish or exclude any genetic cause, and cannot interpret the unverified consumer app findings."
+        }
+      },
+      "sourceClassifications": [],
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A step to gather evidence, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "No lead: the model judged the facts too thin for one."
+        },
+        {
+          "id": "classes",
+          "label": "Variant classifications come only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves variant classifications to the source report."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "insufficient",
+      "matchesExpect": true,
+      "costUsd": 0.00013004
+    },
+    {
+      "case": "D",
+      "shows": "An urgent presentation: a person first",
+      "expect": "urgent",
+      "gate": {
+        "status": "urgent",
+        "reasons": [
+          {
+            "text": "The lab flagged a result in fact 4 as critical.",
+            "fact": 4
+          },
+          {
+            "text": "Breathing rate (28 a minute) scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "Oxygen saturation (90%) scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "Pulse (134 a minute) scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "Consciousness (new confusion) scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "NEWS2 totals 15: high clinical risk, urgent or emergency response.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 15,
+          "complete": true,
+          "red": true,
+          "risk": "high"
+        }
+      },
+      "sent": false,
+      "matchesExpect": true
+    }
+  ]
+}

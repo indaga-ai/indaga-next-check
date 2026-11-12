@@ -7,7 +7,7 @@
 // (Intel and NVIDIA included), encrypts the facts to the attested key, decrypts the reply, checks the brief and
 // checks the signature. Exit code 0 means every check on every case passed.
 import { writeFileSync } from 'node:fs';
-import { CASES, caseById } from '../src/cases/cases.mjs';
+import { CASES, caseById, factText, sourceClassifications } from '../src/cases/cases.mjs';
 import { assessUrgency } from '../src/triage/urgency.mjs';
 import { verifyModelAttestation, newNonce } from '../src/tee/attestation.mjs';
 import { quoteVerifier, gpuVerifier } from '../src/tee/hardware.mjs';
@@ -74,7 +74,7 @@ const results = [];
 let failed = false;
 for (const c of cases) {
   console.log(`\n== Case ${c.id}: ${c.title} (shows: ${c.shows})`);
-  for (const f of c.facts) console.log(`   ${f.n}. ${f.text}\n      [${f.source}]${f.critical ? '  (lab: critical)' : ''}`);
+  for (const f of c.facts) console.log(`   ${f.n}. ${factText(f)}\n      [${f.source}]${f.critical ? '  (lab: critical)' : ''}`);
   const gate = assessUrgency(c);
   console.log(`\n   Urgency rules (fixed, before any AI step): ${gate.status.toUpperCase()}`);
   if (gate.news2) console.log(`   NEWS2: ${gate.news2.parts.map((p) => `${p.label} ${p.value ?? 'missing'} = ${p.points ?? '?'}`).join('; ')}; total ${gate.news2.total}`);
@@ -104,11 +104,20 @@ for (const c of cases) {
     const out = await send(c, att);
     record.sent = true;
     Object.assign(record, { model, elapsedMs: out.elapsedMs, finish: out.finish, usage: out.usage, requestBytes: out.requestBytes, inferenceId: out.inferenceId, replyId: out.replyId, text: out.text });
-    console.log(`\n   Sent ${out.requestBytes.toLocaleString()} bytes of ciphertext (E2EE v3). Reply in ${(out.elapsedMs / 1000).toFixed(1)} s, finish ${out.finish}, tokens ${out.usage?.total_tokens ?? '?'}. Decrypted here:`);
-    console.log(indent(out.text));
+    console.log(`\n   Sent ${out.requestBytes.toLocaleString()} bytes of ciphertext (E2EE v3). Reply in ${(out.elapsedMs / 1000).toFixed(1)} s, finish ${out.finish}, tokens ${out.usage?.total_tokens ?? '?'}.`);
     const { brief, error } = parseBrief(out.text);
     const checked = brief ? checkBrief(brief, c, gate) : { ok: false, checks: [{ id: 'shape', label: 'One JSON brief in the agreed shape', ok: false, detail: error }], flags: [] };
     record.brief = brief;
+    record.sourceClassifications = sourceClassifications(c);
+    const accepted = checked.ok && out.signature.ok && out.finish !== 'length';
+    if (accepted) {
+      for (const { variant, classification, fact } of record.sourceClassifications) {
+        console.log(`   Source report (fact ${fact}): ${variant} · ${classification}`);
+      }
+      console.log(indent(out.text));
+    } else {
+      console.log('   Reply rejected. See the checks below.');
+    }
     record.briefChecks = checked.checks;
     record.flags = checked.flags;
     console.log('\n   Brief checks:');
@@ -117,7 +126,7 @@ for (const c of cases) {
     console.log('   Signature:');
     for (const k of out.signature.checks) console.log(`   ${mark(k.ok)}  ${k.label}`);
     record.signature = { ok: out.signature.ok, checks: out.signature.checks.map((k) => ({ id: k.id, ok: k.ok })) };
-    if (!checked.ok || !out.signature.ok) failed = true;
+    if (!accepted) failed = true;
     const got = !brief ? 'no brief' : brief.next_check?.type === 'handover' ? 'urgent' : brief.lead === null ? 'insufficient' : 'lead';
     record.got = got;
     record.matchesExpect = got === c.expect;

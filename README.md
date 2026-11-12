@@ -22,7 +22,7 @@ You need Node 20.19 or later.
 | Do | See |
 |---|---|
 | `npm install` | 5 runtime packages, the same pinned versions as DNA Confidential |
-| `npm test` | 50 tests pass. They cover the urgency rules against NEWS2's published bands, the brief checks (including the misstated brief from a real run), the cases, NEAR's encryption test vector, saved hardware reports with tampered copies, and a full encrypted exchange through the relay |
+| `npm test` | 51 tests pass. They cover the urgency rules against NEWS2's published bands, the brief checks (including the misstated brief from a real run), the cases, NEAR's encryption test vector, saved hardware reports with tampered copies, and a full encrypted exchange through the relay |
 | `npm run brief -- --case D` | The urgent case stops at the rules. Nothing is sent, and no key is needed |
 | `npm start`, then open http://localhost:8788 | The page in **stand-in mode**: the hardware check runs live, and a local stand-in answers, labelled as unattested |
 | `NEARAI_API_KEY=… npm start` | The page with the attested model |
@@ -67,9 +67,12 @@ The runs are saved in [`checks/`](checks/).
 
   Case D stopped at step 3. At phone width (375 px, checked in dark mode) the page has no horizontal scroll.
 
-**The miss the class check closes.** In the second run (18:49 UTC), case B's lead called one of the two variants "likely pathogenic". Fact 3 says both are pathogenic. Every citation was valid, so every check passed. Now a brief fails if it states a variant class that no fact gives.
-- Re-checked offline, the class check fails exactly that brief and passes the other six saved briefs. The misstated brief is now a test fixture.
-- The check compares class words only. It cannot tell which variant a class belongs to, and another misstated fact, such as a count or a value, still needs the clinician.
+**Variant classifications come from the lab report.** In the second run (18:49 UTC), case B's lead called one of the two variants "likely pathogenic". Fact 3 says both are pathogenic. Every citation was valid, so every check passed. An initial check blocked classes absent from the facts, but it could still accept two genuine labels assigned to the wrong alleles.
+
+The page now displays each reported variant and its classification directly from the numbered source fact. The model can discuss the findings and their possible relevance. Replies with classification terms or common aliases fail validation, even if both terms appear in the source. The page displays an accepted brief only after its content and signature checks pass. The original misstatement and a swap between two differently classified variants are regression tests. The class wording check uses text patterns. Clinical interpretations and other factual claims still need independent review.
+
+The [source-classification rerun](checks/2026-11-12-source-classifications-run.json) accepted A, B and C with verified signatures and stopped D before inference. Both GAA labels in B came from fact 3. B's generated lead still said the variants were in trans while acknowledging phase was unconfirmed. The lab report does not establish phase. That is a separate factual error outside the classification check.
+
 
 These checks cover how the brief is produced and whether each point traces to a fact. **They do not show that the advice is right.** The model test behind the cases is exploratory, with 4 cases, provisional author scores and no specialist review. Showing that the brief helps a clinician choose a safe, useful next check needs a study with clinicians against a protocol they agree.
 
@@ -109,7 +112,7 @@ the attested key
   - one to three gaps;
   - every point citing this case's fact numbers;
   - a lead, if any, with a confidence of low, moderate or high;
-  - no variant class that the facts do not give. "Likely pathogenic" is not "pathogenic"; VUS means uncertain significance; a negated or hypothetical mention ("sequencing may find a pathogenic variant") does not count.
+  - generated text leaves variant classifications to the numbered source report, including when referring to a possible future finding.
 
   It raises four flags:
   - wording about a dose or a treatment step;

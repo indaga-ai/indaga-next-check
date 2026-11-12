@@ -8,6 +8,7 @@
 //   observations     a full set of observations, scored with NEWS2 (adults only); `fact` names the fact they come from
 //   stable           a named clinician confirmed the person is not acutely unwell; `fact` names the fact that says so
 //   fact.critical    the lab itself flagged this result as critical
+//   fact.variantClassifications  each exact variant and its classification, transcribed from this source report
 //   shows / expect   what the case demonstrates; never sent, never used by the rules
 
 export const CASES = [
@@ -40,7 +41,15 @@ export const CASES = [
     facts: [
       { n: 1, text: 'A 39-year-old has slowly progressive weakness around the hips and shoulders and finds stairs hard.', source: 'Neurology clinic letter, 30 Oct 2026' },
       { n: 2, text: 'Clinic observations: breathing 15 a minute, oxygen saturation 97% on air, blood pressure 124/78 mmHg, pulse 72 a minute, alert, temperature 36.7 °C.', source: 'Clinic observations, 30 Oct 2026' },
-      { n: 3, text: 'A gene panel reports two pathogenic GAA variants, each found in one copy: c.-32-13T>G and c.2560C>T (p.Arg854Ter).', source: 'Genetics lab report, 6 Nov 2026' },
+      {
+        n: 3,
+        text: 'A gene panel reports two GAA variants, each found in one copy.',
+        source: 'Genetics lab report, 6 Nov 2026',
+        variantClassifications: [
+          { variant: 'GAA c.-32-13T>G', classification: 'pathogenic' },
+          { variant: 'GAA c.2560C>T (p.Arg854Ter)', classification: 'pathogenic' },
+        ],
+      },
       { n: 4, text: 'The lab did not establish whether the two variants are on different copies of the gene (phase). No GAA enzyme activity result is available.', source: 'Genetics lab report, 6 Nov 2026: limitations' },
       { n: 5, text: 'There is no new shortness of breath and no recent sudden worsening.', source: 'Neurology clinic letter, 30 Oct 2026' },
     ],
@@ -80,5 +89,18 @@ export const CASES = [
     ],
   },
 ];
+
+/** Source classifications are copied from the case facts, never the generated reply. */
+export function sourceClassifications(c) {
+  return c.facts.flatMap((fact) => (fact.variantClassifications ?? []).map(({ variant, classification }) => ({
+    variant, classification, fact: fact.n, source: fact.source,
+  })));
+}
+
+export function factText(fact) {
+  if (!fact.variantClassifications?.length) return fact.text;
+  const entries = fact.variantClassifications.map(({ variant, classification }) => `${variant}: ${classification}`);
+  return `${fact.text} Reported classifications: ${entries.join('; ')}.`;
+}
 
 export const caseById = (id) => CASES.find((c) => c.id === String(id).toUpperCase()) || null;

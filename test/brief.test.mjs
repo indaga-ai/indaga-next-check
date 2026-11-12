@@ -4,8 +4,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { parseBrief, checkBrief, statedClasses } from '../src/ai/brief.mjs';
-import { caseById } from '../src/cases/cases.mjs';
+import { parseBrief, checkBrief } from '../src/ai/brief.mjs';
+import { caseById, sourceClassifications } from '../src/cases/cases.mjs';
 
 const A = caseById('A');
 const good = () => ({
@@ -102,56 +102,63 @@ test('no false flags on lab values or on how a confirmatory test is described', 
   assert.deepEqual(checkBrief(b, A).flags, []);
 });
 
-// The class check: a brief must not state a variant class that no fact gives. It was added after a live run in
-// which case B's lead called one of two pathogenic variants "likely pathogenic" and every other check passed.
 const B = caseById('B');
-const withLead = (c, explanation) => ({ ...good(), lead: { explanation, confidence: 'low', facts: [1] } });
+const withLead = (explanation) => ({ ...good(), lead: { explanation, confidence: 'low', facts: [1] } });
 
 test('class check: the real misstated brief from the 12 Nov run fails, and only on its class', () => {
   const { brief } = JSON.parse(readFileSync(new URL('./fixtures/brief-b-misstated-class.json', import.meta.url), 'utf8'));
-  const r = checkBrief(brief, B);
-  assert.equal(r.ok, false);
-  assert.deepEqual(r.checks.filter((c) => !c.ok).map((c) => c.id), ['classes']);
-  assert.match(r.checks.find((c) => c.id === 'classes').detail, /likely pathogenic.*the facts say: pathogenic/);
+  const result = checkBrief(brief, B);
+  assert.equal(result.ok, false);
+  assert.deepEqual(result.checks.filter((check) => !check.ok).map((check) => check.id), ['classes']);
 });
 
-test('class check: a brief that keeps the facts\' class passes', () => {
-  assert.equal(checkBrief(withLead(B, 'Two pathogenic GAA variants and proximal weakness fit late-onset Pompe disease; phase is open.'), B).ok, true);
-  assert.equal(checkBrief(withLead(B, 'Both variants are pathogenic, but whether they sit on different copies is unknown.'), B).ok, true);
+test('class check: only the report supplies labels, and the model can still discuss the findings', () => {
+  const brief = withLead('The two GAA findings support Pompe disease as a possibility; phase is open.');
+  brief.lead.facts = [1, 3, 4];
+  assert.equal(checkBrief(brief, B).ok, true);
+  assert.deepEqual(sourceClassifications(B), [
+    { variant: 'GAA c.-32-13T>G', classification: 'pathogenic', fact: 3, source: 'Genetics lab report, 6 Nov 2026' },
+    { variant: 'GAA c.2560C>T (p.Arg854Ter)', classification: 'pathogenic', fact: 3, source: 'Genetics lab report, 6 Nov 2026' },
+  ]);
+  assert.deepEqual(sourceClassifications(A), []);
 });
 
-test('class check: a class stated with no fact behind it fails, in any case and any part of the brief', () => {
-  const fails = (c, text) => {
-    const b = withLead(c, text);
-    return checkBrief(b, c).checks.find((x) => x.id === 'classes').ok === false;
-  };
-  assert.ok(fails(A, 'A likely pathogenic variant was found in DMD.'));
-  assert.ok(fails(A, 'The variant is likely benign, so another cause is likely.'));
-  assert.ok(fails(B, 'One GAA variant is a VUS.'));
-  const gap = good();
-  gap.gaps[0].gap = 'The pathogenic DMD variant still needs its phase.';
-  assert.equal(checkBrief(gap, A).checks.find((x) => x.id === 'classes').ok, false, 'a gap counts too');
-});
-
-test('class check: negated or hypothetical mentions name no reported variant', () => {
+test('class check: generated classifications fail even when copied from a fact, negated, or hypothetical', () => {
   for (const text of [
-    'Sequencing may find a pathogenic small variant that MLPA cannot see.',
-    'Sequencing is needed to detect any pathogenic single-letter change.',
-    'The MLPA found no pathogenic deletion or duplication.',
-    'If a likely pathogenic variant is found, segregation would follow.',
-    'Muscle weakness can have a benign course in children.',
-  ]) assert.equal(checkBrief(withLead(A, text), A).ok, true, text);
+    'Both reported GAA variants are pathogenic.',
+    'GAA c.2560C>T is likely benign.',
+    'There is no variant of uncertain significance.',
+    'Sequencing may find a pathogenic small variant.',
+    'The variant is of unknown significance.',
+    'The GAA finding is a VUS.',
+    'GAA c.2560C>T is disease-causing.',
+    'The GAA result is LP.',
+  ]) {
+    assert.equal(ids(checkBrief(withLead(text), B)).classes, false, text);
+  }
+  const brief = good();
+  brief.gaps[0].gap = 'The DMD variant is likely pathogenic and needs its phase.';
+  assert.equal(ids(checkBrief(brief, A)).classes, false, 'the check covers gaps as well as the lead');
 });
 
-test('class check: an upgraded or downgraded class fails; equivalent names for uncertain significance pass', () => {
-  // These one-fact cases are only for the class check, so only its result is read.
-  const classOk = (c, text) => checkBrief(withLead(c, text), c).checks.find((x) => x.id === 'classes').ok;
-  const lp = { ...A, facts: [{ n: 1, text: 'A likely pathogenic TTN variant was reported in one copy.', source: 's' }] };
-  assert.equal(classOk(lp, 'The pathogenic TTN variant explains the weakness.'), false, 'upgraded');
-  assert.equal(classOk(lp, 'The likely pathogenic TTN variant may explain the weakness.'), true);
-  const vus = { ...A, facts: [{ n: 1, text: 'A variant of uncertain significance in RYR1 was reported.', source: 's' }] };
-  assert.equal(classOk(vus, 'The VUS in RYR1 cannot carry the diagnosis on its own.'), true);
-  assert.equal(classOk(vus, 'The variant of unknown significance needs segregation data.'), true);
-  assert.equal(classOk(vus, 'The pathogenic RYR1 variant explains it.'), false, 'upgraded from uncertain');
-  assert.deepEqual(statedClasses('one pathogenic and one likely pathogenic GAA variant').map((x) => x.cls), ['pathogenic', 'likely pathogenic']);
+test('a mixed source report cannot lend one variant’s classification to another', () => {
+  const mixed = {
+    ...B,
+    facts: B.facts.map((fact) => fact.n === 3 ? {
+      ...fact,
+      text: 'The lab reports GAA c.-32-13T>G as pathogenic and GAA c.2560C>T as likely benign.',
+      variantClassifications: [
+        { variant: 'GAA c.-32-13T>G', classification: 'pathogenic' },
+        { variant: 'GAA c.2560C>T', classification: 'likely benign' },
+      ],
+    } : fact),
+  };
+  const brief = withLead('The lab reports GAA c.-32-13T>G as likely benign and GAA c.2560C>T as pathogenic.');
+  brief.lead.facts = [3];
+  const result = checkBrief(brief, mixed);
+  assert.deepEqual(result.checks.filter((check) => !check.ok).map((check) => check.id), ['classes']);
+  assert.deepEqual(sourceClassifications(mixed).map(({ variant, classification }) => [variant, classification]), [
+    ['GAA c.-32-13T>G', 'pathogenic'],
+    ['GAA c.2560C>T', 'likely benign'],
+  ]);
 });

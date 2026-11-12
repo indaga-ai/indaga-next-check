@@ -1,6 +1,6 @@
 // The page. Everything here runs in the browser: the urgency rules, the hardware check, encrypting the facts,
 // decrypting the brief, checking it and checking its signature. The server only relays ciphertext.
-import { CASES } from '../src/cases/cases.mjs';
+import { CASES, factText, sourceClassifications } from '../src/cases/cases.mjs';
 import { assessUrgency, NEWS2_SOURCE } from '../src/triage/urgency.mjs';
 import { verifyModelAttestation, newNonce } from '../src/tee/attestation.mjs';
 import { quoteVerifier, gpuVerifier } from '../src/tee/hardware.mjs';
@@ -74,7 +74,7 @@ function pickCase(c, button) {
       el('thead', {}, el('tr', {}, el('th', { text: '#' }), el('th', { text: 'Fact' }), el('th', { text: 'Source' }))),
       el('tbody', {}, c.facts.map((f) => el('tr', { id: `fact-${f.n}` },
         el('td', { class: 'n', text: String(f.n) }),
-        el('td', {}, f.text, f.critical ? el('span', { class: 'tag bad', text: 'lab: critical' }) : null),
+        el('td', {}, factText(f), f.critical ? el('span', { class: 'tag bad', text: 'lab: critical' }) : null),
         el('td', { class: 'src', text: f.source }),
       ))),
     )),
@@ -252,10 +252,15 @@ async function fetchSignature(id, standInHashes) {
 
 const TYPE_LABEL = { test: 'A test', evidence: 'Gather evidence', handover: 'Hand over now' };
 
-function renderBrief(brief) {
-  const nc = brief.next_check || {};
+function renderBrief(brief, classifications) {
+  const nc = brief.next_check;
   const lead = brief.lead;
   return el('div', { class: 'brief' },
+    classifications.length ? el('section', { class: 'gaps' },
+      el('p', { class: 'overline', text: 'Variant classifications from the lab report' }),
+      el('ul', {}, classifications.map(({ variant, classification, fact, source }) =>
+        el('li', {}, el('strong', { text: variant }), ` · ${classification}`, factChips([fact]), el('div', { class: 'muted', text: source }))),
+      )) : null,
     el('section', { class: 'next' },
       el('p', { class: 'overline' }, 'One next check · for a clinician to review', nc.type ? el('span', { class: `type ${nc.type}`, text: TYPE_LABEL[nc.type] || nc.type }) : null),
       el('h3', {}, nc.check || '(none given)'),
@@ -279,6 +284,8 @@ async function sendBrief() {
   const live = state.config.inference === 'near-ai-cloud';
   const modelKey = live ? state.key.publicKey : state.config.standInKey;
   const signKey = live ? state.key : { algo: 'ed25519', publicKey: modelKey, address: modelKey, standIn: true };
+  const status = el('p', { class: 'status' }, el('span', { class: 'spinner' }), live ? 'The model is reading the case inside the TEE...' : 'The stand-in is answering...');
+  out.replaceChildren(status);
   try {
     const message = userMessage(c);
     const size = new TextEncoder().encode(message).length;
@@ -289,10 +296,11 @@ async function sendBrief() {
     out.replaceChildren(
       el('details', {}, el('summary', { text: `What our server and NEAR's gateway see: ${fmtBytes(requestBytes.length)} of ciphertext` }),
         el('pre', { text: `${messages[1].content.slice(0, 600)}...` })),
-      el('p', { class: 'status' }, el('span', { class: 'spinner' }), live ? 'The model is reading the case inside the TEE...' : 'The stand-in is answering...'),
+      status,
     );
     const r = await fetch('api/brief', { method: 'POST', headers: { 'content-type': 'application/json', ...e2eeHeaders(client.publicKey, modelKey) }, body: requestBytes });
     const responseBytes = new Uint8Array(await r.arrayBuffer());
+    if (!status.isConnected) return;
     if (!r.ok) {
       let msg = `HTTP ${r.status}`;
       try {
@@ -303,17 +311,15 @@ async function sendBrief() {
     const reply = JSON.parse(new TextDecoder().decode(responseBytes));
     const choice = reply.choices?.[0];
     const text = decryptWith(client.secretKey, choice?.message?.content || '');
-    const status = el('p', { class: 'status', text: 'Decrypted on this device with a key made for this visit. Checking the brief and the signature...' });
-    out.lastChild.replaceWith(status);
+    status.textContent = 'Decrypted on this device with a key made for this visit. Checking the brief and the signature...';
     const { brief, error } = parseBrief(text);
-    if (brief) out.append(renderBrief(brief));
     if (choice?.finish_reason === 'length') out.append(el('p', { class: 'status error', text: 'The reply reached its length limit and may be cut off.' }));
-    out.append(el('details', {}, el('summary', { text: 'The decrypted reply, exactly as the model wrote it' }), el('pre', { text })));
     const checked = brief ? checkBrief(brief, c, state.gate) : { ok: false, checks: [{ id: 'shape', label: 'One JSON brief in the agreed shape', ok: false, detail: error }], flags: [] };
     out.append(el('h3', { class: 'group', text: 'Checks on the brief, on this page' }));
     renderChecks(out, checked.checks);
     for (const f of checked.flags) out.append(el('div', { class: 'flag', text: f.text }));
     const sig = await fetchSignature(reply.id, live ? null : `${sha256Hex(requestBytes)}:${sha256Hex(responseBytes)}`);
+    if (!status.isConnected) return;
     const v = verifyReplySignature({ sig, model: state.config.model, requestBytes, responseBytes, key: signKey });
     status.textContent = 'Decrypted on this device with a key made for this visit.';
     out.append(el('h3', { class: 'group', text: 'Was it signed inside the verified hardware?' }));
@@ -322,12 +328,22 @@ async function sendBrief() {
     else out.append(el('div', { class: `verdict ${v.ok && checked.ok ? 'ok' : 'bad'}`, text: v.ok
       ? checked.ok ? 'Signed inside the verified hardware, for exactly this request, and the brief passed every check. A clinician still decides.' : 'Signed inside the verified hardware, but the brief failed a check above: do not use it.'
       : 'The signature check failed: do not trust this reply.' }));
-    if (live && v.ok && checked.ok) $('step-brief').classList.add('done');
+    if (v.ok && checked.ok && choice?.finish_reason !== 'length') {
+      status.after(
+        renderBrief(brief, sourceClassifications(c)),
+        el('details', {}, el('summary', { text: 'The decrypted reply, exactly as the model wrote it' }), el('pre', { text })),
+      );
+      if (live) $('step-brief').classList.add('done');
+    } else {
+      status.after(el('p', { class: 'status error', text: 'The reply failed verification. Review the numbered source facts above.' }));
+    }
   } catch (e) {
-    out.append(el('p', { class: 'status error', text: `The brief failed: ${e.message}` }));
+    if (status.isConnected) out.append(el('p', { class: 'status error', text: `The brief failed: ${e.message}` }));
   } finally {
-    button.disabled = state.gate?.status !== 'clear' || !state.key;
-    button.textContent = 'Send again';
+    if (status.isConnected) {
+      button.disabled = state.gate?.status !== 'clear' || !state.key;
+      button.textContent = 'Send again';
+    }
   }
 }
 

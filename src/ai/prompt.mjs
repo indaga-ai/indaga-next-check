@@ -1,6 +1,7 @@
 // The fixed instructions and the fixed message shape for a brief. The relay checks every request against this
 // shape (it cannot read the encrypted text, but it can check the model, the roles and the exact sizes), so the
 // prototype cannot be used as a general-purpose model endpoint.
+import { factText } from '../cases/cases.mjs';
 import { utf8ToBytes } from '../util/bytes.mjs';
 
 export const SYSTEM_PROMPT = [
@@ -12,14 +13,15 @@ export const SYSTEM_PROMPT = [
   '4. If the facts are too thin for a lead, the next check gathers the missing evidence, such as a history and examination or the original report, and is not a genetic test.',
   '5. If any fact suggests the person may be acutely unwell now, the next check is an immediate handover to the treating team, before any genetic test.',
   '6. Never present a possible explanation as established. Never give treatment, medicine or dosing advice.',
-  '7. Answer with one JSON object and nothing else, in exactly this shape:',
+  '7. The page displays the lab’s variant classifications directly. In every text field, use the variant identifiers or “reported findings”. Omit classification words such as pathogenic, likely pathogenic, benign, likely benign, uncertain significance and VUS, including in negated or hypothetical phrases.',
+  '8. Answer with one JSON object and nothing else, in exactly this shape:',
   '{"lead":{"explanation":"...","confidence":"low|moderate|high","facts":[1]},"gaps":[{"gap":"...","facts":[2]}],"next_check":{"type":"test|evidence|handover","check":"...","why":"...","facts":[3],"cannot_show":"..."}}',
   '"lead" may be null. Give one to three gaps. "type" is "test" for a laboratory or genetic test, "evidence" for gathering history, examination or records, and "handover" for handing over to the treating team. Keep every text value under 40 words.',
 ].join('\n');
 
 /** The user message: the numbered facts as JSON lines, in order. Nothing else about the case is sent. */
 export function userMessage(c) {
-  return `Facts:\n${c.facts.map((f) => JSON.stringify({ n: f.n, fact: f.text, source: f.source })).join('\n')}`;
+  return `Facts:\n${c.facts.map((f) => JSON.stringify({ n: f.n, fact: factText(f), source: f.source })).join('\n')}`;
 }
 
 // Bounds the relay enforces. A case's facts are well under 2 kB; MAX_USER_BYTES leaves room for longer cases.
