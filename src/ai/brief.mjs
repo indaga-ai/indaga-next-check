@@ -1,6 +1,7 @@
 // Reads the model's reply and checks it on the page. The checks are about form and traceability: one JSON brief,
-// exactly one next check, every point tied to real fact numbers, and a lead that says how confident it is. They
-// cannot judge whether the medicine is right; that is the clinician's review, and the page says so.
+// exactly one next check, every point tied to real fact numbers, a lead that says how confident it is, and no
+// variant class that the facts do not give. They cannot judge whether the medicine is right; that is the
+// clinician's review, and the page says so.
 // Flags point a reviewer at wording that needs a closer look. They are word patterns, not guarantees.
 
 const CONFIDENCE = ['low', 'moderate', 'high'];
@@ -45,6 +46,55 @@ const SETTLED = [
   /\bis diagnostic of\b/i,
   /\bhas been diagnosed\b/i,
 ];
+
+// Variant classes, in the ACMG/AMP terms a lab report uses. "likely ..." is matched before the bare term, so
+// "likely pathogenic" never counts as "pathogenic". "Benign" is also an ordinary adjective ("a benign course"), so
+// it counts only next to a word for a variant.
+const CLASS_RE = /\b(likely pathogenic|likely benign|pathogenic|benign|variants? of (?:uncertain|unknown) significance|uncertain significance|unknown significance|VUS|VOUS)\b/gi;
+const VARIANT_WORD = /\b(?:variants?|alleles?|changes?|mutations?|findings?|polymorphisms?)\b/i;
+// A class after "no" or "any" names no reported variant ("no pathogenic deletion", "to detect any pathogenic
+// change"). After an indefinite word it is hypothetical only when its sentence says so ("sequencing may find a
+// pathogenic variant"); "a likely pathogenic variant was found" still counts as a statement.
+const NEGATING = /(?:^|[^\w])(?:no|any|without|not)\s+$/i;
+const INDEFINITE = /(?:^|[^\w])(?:a|an|another|other|further|additional|new|second|possible|potential|candidate)\s+$/i;
+const HYPOTHETICAL = /\b(?:may|might|could|would|if|whether|rule out|exclude|look(?:ing)? for|search(?:ing)? for|to (?:detect|find|identify|confirm))\b/i;
+
+function normalizeClass(s) {
+  const x = s.toLowerCase();
+  return /significance|^vus$|^vous$/.test(x) ? 'uncertain significance' : x;
+}
+
+/**
+ * The variant classes a text states about reported variants, in order: [{ cls, at }]. Mentions that name no
+ * reported variant (negated, or hypothetical in their sentence) are left out.
+ */
+export function statedClasses(text) {
+  const t = String(text ?? '');
+  const out = [];
+  for (const m of t.matchAll(CLASS_RE)) {
+    const cls = normalizeClass(m[1]);
+    const before = t.slice(Math.max(0, m.index - 48), m.index);
+    const end = m.index + m[0].length;
+    if (cls.endsWith('benign')) {
+      const near = `${before.split(/\s+/).slice(-5).join(' ')} ${t.slice(end, end + 48).split(/\s+/).slice(0, 4).join(' ')}`;
+      if (!VARIANT_WORD.test(near)) continue;
+    }
+    const from = Math.max(t.lastIndexOf('.', m.index), t.lastIndexOf(';', m.index), t.lastIndexOf('\n', m.index)) + 1;
+    const stops = ['.', ';', '\n'].map((ch) => t.indexOf(ch, end)).filter((i) => i >= 0);
+    const sentence = t.slice(from, stops.length ? Math.min(...stops) : t.length);
+    if (NEGATING.test(before)) continue;
+    if (INDEFINITE.test(before) && HYPOTHETICAL.test(sentence)) continue;
+    out.push({ cls, at: m.index });
+  }
+  return out;
+}
+
+/** Classes the brief states that no fact of the case gives. Empty when every stated class is in the facts. */
+export function misstatedClasses(brief, c) {
+  const given = new Set(c.facts.flatMap((f) => statedClasses(f.text).map((x) => x.cls)));
+  const stated = statedClasses(allText(brief)).map((x) => x.cls);
+  return { given: [...given], stated: [...new Set(stated)], wrong: [...new Set(stated.filter((cls) => !given.has(cls)))] };
+}
 
 function allText(brief) {
   const out = [];
@@ -93,6 +143,14 @@ export function checkBrief(brief, c, gate = null) {
     id: 'lead', label: 'A lead, if any, states its confidence', ok: Boolean(leadOk),
     detail: lead === null ? 'No lead: the model judged the facts too thin for one.'
       : leadOk ? `Offered as a possibility, with ${lead.confidence} confidence.` : 'A lead needs an explanation and a confidence of low, moderate or high.',
+  });
+
+  const cls = shapeOk ? misstatedClasses(brief, c) : { given: [], stated: [], wrong: [] };
+  checks.push({
+    id: 'classes', label: 'Every variant class it states is one the facts give', ok: shapeOk && cls.wrong.length === 0,
+    detail: !shapeOk ? 'No brief to read.'
+      : cls.wrong.length ? `It calls a variant "${cls.wrong.join('", "')}", which no fact says (${cls.given.length ? `the facts say: ${cls.given.join(', ')}` : 'the facts give no class'}). A misstated fact fails the brief.`
+        : cls.stated.length ? `It states ${cls.stated.join(', ')}, as the facts do.` : 'It states no variant class.',
   });
 
   const flags = [];

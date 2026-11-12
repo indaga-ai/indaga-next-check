@@ -1,0 +1,40 @@
+{
+  "note": "Case B's brief from the live run of 2026-11-12T18:49:00Z (checks/2026-11-12-final-run.json), byte for byte as decrypted. Its lead names a class that no fact gives; fact 3 says both variants are pathogenic. Every other check passed, which is why the class check exists.",
+  "model": "z-ai/glm-5.3-flash",
+  "brief": {
+    "lead": {
+      "explanation": "Late-onset pattern with proximal limb-girdle weakness plus one pathogenic and one likely pathogenic GAA variant is consistent with late-onset Pompe disease, though phase is unconfirmed.",
+      "confidence": "moderate",
+      "facts": [
+        1,
+        3,
+        4
+      ]
+    },
+    "gaps": [
+      {
+        "gap": "Phase of the two GAA variants not established; diagnosis not genetically confirmed.",
+        "facts": [
+          4
+        ]
+      },
+      {
+        "gap": "No GAA enzyme activity result to corroborate biallelic disease.",
+        "facts": [
+          4
+        ]
+      }
+    ],
+    "next_check": {
+      "type": "test",
+      "check": "GAA enzyme activity (acid alpha-glucosidase) assay on dried blood spot or leukocytes, plus targeted phase analysis of the two variants (e.g. parental segregation testing).",
+      "why": "Enzyme deficiency plus confirmed trans configuration would confirm biallelic Pompe disease explaining the proximal weakness.",
+      "facts": [
+        3,
+        4,
+        1
+      ],
+      "cannot_show": "It cannot show respiratory or cardiac involvement or disease severity; those need separate assessment."
+    }
+  }
+}

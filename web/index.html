@@ -35,7 +35,7 @@
 
   <main class="wrap">
     <section class="intro">
-      <p class="overline">Research prototype · made-up cases only</p>
+      <p class="overline">Invented cases · research, not medicine</p>
       <h1>One next check, for a clinician to review</h1>
       <p class="lede">Pick a made-up rare-disease case. Fixed rules on this page check first whether the person may be acutely unwell. If so, the case goes to a person and no AI is asked. Otherwise an AI reads the numbered facts inside verified hardware and returns a brief: the leading explanation, the gaps in the evidence, and one next check, each tied to the facts.</p>
       <p class="banner warn"><strong>Not for patient care.</strong> Every case is invented. Nothing here is clinically validated: the four-case model test it builds on is exploratory, and no specialist has reviewed it yet.</p>
@@ -83,7 +83,7 @@
         <li><strong>Urgency by fixed rules, not by the AI.</strong> A result the lab flagged as critical, or a NEWS2 score with a 3 in any parameter or a total of 5 or more (<a href="https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/" rel="noopener">Royal College of Physicians, 2017</a>), stops the case: a person first, no AI. A case goes on only when a complete adult NEWS2 score is low or a named clinician confirmed the person is not acutely unwell. Otherwise it is held.</li>
         <li><strong>The hardware is checked before anything is sent.</strong> The browser verifies that the model key belongs to <code>z-ai/glm-5.3-flash</code> running in an Intel TDX confidential VM with its NVIDIA GPUs in confidential mode, bound to a fresh nonce. If any check fails, nothing is sent.</li>
         <li><strong>Only ciphertext on the way.</strong> The facts are encrypted to that key with NEAR AI's end-to-end encryption (version 3). The relay adds the API key and checks the request's fixed shape; it cannot read it.</li>
-        <li><strong>The brief is checked on the page.</strong> One JSON brief; exactly one next check, with why and what it cannot show; every point citing this case's facts; a lead that states its confidence. Flags point at wording about doses, treatment or a settled diagnosis. Then the reply's signature is verified against the attested key.</li>
+        <li><strong>The brief is checked on the page.</strong> One JSON brief; exactly one next check, with why and what it cannot show; every point citing this case's facts; a lead that states its confidence; and no variant class that the facts do not give. Flags point at wording about doses, treatment or a settled diagnosis. Then the reply's signature is verified against the attested key.</li>
       </ol>
       <h3>What this does not show</h3>
       <ul>

@@ -22,7 +22,7 @@ You need Node 20.19 or later.
 | Do | See |
 |---|---|
 | `npm install` | 5 runtime packages, the same pinned versions as DNA Confidential |
-| `npm test` | 45 tests pass. They cover the urgency rules against NEWS2's published bands, the brief checks, the cases, NEAR's encryption test vector, saved hardware reports with tampered copies, and a full encrypted exchange through the relay |
+| `npm test` | 50 tests pass. They cover the urgency rules against NEWS2's published bands, the brief checks (including the misstated brief from a real run), the cases, NEAR's encryption test vector, saved hardware reports with tampered copies, and a full encrypted exchange through the relay |
 | `npm run brief -- --case D` | The urgent case stops at the rules. Nothing is sent, and no key is needed |
 | `npm start`, then open http://localhost:8788 | The page in **stand-in mode**: the hardware check runs live, and a local stand-in answers, labelled as unattested |
 | `NEARAI_API_KEY=… npm start` | The page with the attested model |
@@ -45,14 +45,15 @@ Every person, date, letter and result is invented. Cases A, B and C reuse the fi
 
 The runs are saved in [`checks/`](checks/).
 
-- **Hardware.** Every attestation check passed for `z-ai/glm-5.3-flash`:
+- **Hardware.** Every attestation check passed for `z-ai/glm-5.3-flash`, in every run:
   - Intel's signature over the TDX quote;
   - the model key and our nonce inside it;
   - the measured software, the boot log and the deployment log;
   - NVIDIA's verdict on the GPUs;
   - NEAR's gateway running in a TEE.
-- **Cases A, B and C, in two runs.** The facts were encrypted (E2EE v3), with about 5.5 kB of ciphertext per request.
-  - Each brief came back in 5 to 10 seconds, at about 800 tokens.
+- **Cases A, B and C, in three runs.** The facts were encrypted (E2EE v3), with about 5.5 kB of ciphertext per request.
+  - Each brief came back in 5 to 10 seconds in the first two runs, and in up to 45 seconds in the third. Each used about 850 tokens.
+  - The third run, at 19:00 UTC, came after the class check was added. It ran all four cases plus case B five more times: no brief misstated a class, and every one passed with a verified signature.
   - Each passed all four brief checks, raised no flag, and took the path its case shows.
   - Each reply's signature verified against the attested key, over the exact request and reply bytes.
 - **Case D.** The rules stopped it, and nothing was sent.
@@ -64,7 +65,9 @@ The runs are saved in [`checks/`](checks/).
 
   Case D stopped at step 3. At phone width (375 px, checked in dark mode) the page has no horizontal scroll.
 
-**What the checks did not catch.** In the final run, case B's lead called one of the two variants "likely pathogenic". Fact 3 says both are pathogenic. Every citation was valid, so every check passed. Catching a sentence that misstates a fact is the clinician's job; a future check could compare classification words with the facts.
+**The miss the class check closes.** In the second run (18:49 UTC), case B's lead called one of the two variants "likely pathogenic". Fact 3 says both are pathogenic. Every citation was valid, so every check passed. Now a brief fails if it states a variant class that no fact gives.
+- Re-checked offline, the class check fails exactly that brief and passes the other six saved briefs. The misstated brief is now a test fixture.
+- The check compares class words only. It cannot tell which variant a class belongs to, and another misstated fact, such as a count or a value, still needs the clinician.
 
 These checks cover how the brief is produced and whether each point traces to a fact. **They do not show that the advice is right.** The model test behind the cases is exploratory, with 4 cases, provisional author scores and no specialist review. Showing that the brief helps a clinician choose a safe, useful next check needs a study with clinicians against a protocol they agree.
 
@@ -103,7 +106,8 @@ the attested key
   - exactly one next check, typed (test, evidence or handover), with why and what it cannot show;
   - one to three gaps;
   - every point citing this case's fact numbers;
-  - a lead, if any, with a confidence of low, moderate or high.
+  - a lead, if any, with a confidence of low, moderate or high;
+  - no variant class that the facts do not give. "Likely pathogenic" is not "pathogenic"; VUS means uncertain significance; a negated or hypothetical mention ("sequencing may find a pathogenic variant") does not count.
 
   It raises four flags:
   - wording about a dose or a treatment step;

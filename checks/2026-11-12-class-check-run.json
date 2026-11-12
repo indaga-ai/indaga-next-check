@@ -1,0 +1,1057 @@
+{
+  "when": "2026-11-12T19:00:11.441Z",
+  "model": "z-ai/glm-5.3-flash",
+  "noGate": false,
+  "results": [
+    {
+      "case": "A",
+      "shows": "A well-supported lead",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "His paediatrician confirmed that the person is not acutely unwell.",
+            "fact": 5
+          }
+        ],
+        "news2": null
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 44776,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 643,
+        "total_tokens": 884,
+        "completion_tokens": 241,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 5527,
+      "text": "{\"lead\":{\"explanation\":\"Progressive proximal weakness with Gowers' sign and grossly raised creatine kinase suggests a dystrophinopathy (Duchenne muscular dystrophy); the MLPA was negative but cannot exclude a point mutation.\",\"confidence\":\"moderate\",\"facts\":[1,2,3,4]},\"gaps\":[{\"gap\":\"MLPA cannot detect single-letter changes or small insertions/deletions in the DMD gene, so a sequence-level variant remains unexcluded.\",\"facts\":[3,4]},{\"gap\":\"No muscle biopsy, EMG, or clinical examination findings are recorded to confirm a dystrophic process.\",\"facts\":[1,2]}],\"next_check\":{\"type\":\"test\",\"check\":\"Order full DMD gene sequencing to detect single-nucleotide variants and small insertions/deletions across all 79 exons.\",\"why\":\"The MLPA excluded whole-exon deletions/duplications only; sequencing completes the DMD analysis given the dystrophinopathy picture.\",\"facts\":[3,4],\"cannot_show\":\"It cannot detect deep intronic variants, duplications of single exons below MLPA resolution, or confirm dystrophin protein loss.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Progressive proximal weakness with Gowers' sign and grossly raised creatine kinase suggests a dystrophinopathy (Duchenne muscular dystrophy); the MLPA was negative but cannot exclude a point mutation.",
+          "confidence": "moderate",
+          "facts": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "MLPA cannot detect single-letter changes or small insertions/deletions in the DMD gene, so a sequence-level variant remains unexcluded.",
+            "facts": [
+              3,
+              4
+            ]
+          },
+          {
+            "gap": "No muscle biopsy, EMG, or clinical examination findings are recorded to confirm a dystrophic process.",
+            "facts": [
+              1,
+              2
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "Order full DMD gene sequencing to detect single-nucleotide variants and small insertions/deletions across all 79 exons.",
+          "why": "The MLPA excluded whole-exon deletions/duplications only; sequencing completes the DMD analysis given the dystrophinopathy picture.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "It cannot detect deep intronic variants, duplications of single exons below MLPA resolution, or confirm dystrophin protein loss."
+        }
+      },
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with moderate confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Every variant class it states is one the facts give",
+          "ok": true,
+          "detail": "It states no variant class."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 39591,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 654,
+        "total_tokens": 853,
+        "completion_tokens": 199,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 5537,
+      "text": "{\"lead\":{\"explanation\":\"Late-onset pattern with proximal weakness fits a GAA-related condition, but biallelic disease is not established because phase is unknown and enzyme activity is missing.\",\"confidence\":\"low\",\"facts\":[1,3,4]},\"gaps\":[{\"gap\":\"Phase of the two GAA variants is unestablished, so carrier versus biallelic status is unknown.\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result is available to support or exclude a diagnosis.\",\"facts\":[4]}],\"next_check\":{\"type\":\"test\",\"check\":\"Order GAA enzyme activity testing, ideally on a dried blood spot or leukocytes, to assess whether activity is reduced consistent with biallelic disease.\",\"why\":\"Reduced enzyme activity would support biallelic involvement when phase cannot be resolved from the panel report.\",\"facts\":[4],\"cannot_show\":\"It cannot establish which variants are on which chromosome, nor confirm the variants explain the weakness.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Late-onset pattern with proximal weakness fits a GAA-related condition, but biallelic disease is not established because phase is unknown and enzyme activity is missing.",
+          "confidence": "low",
+          "facts": [
+            1,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Phase of the two GAA variants is unestablished, so carrier versus biallelic status is unknown.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result is available to support or exclude a diagnosis.",
+            "facts": [
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "Order GAA enzyme activity testing, ideally on a dried blood spot or leukocytes, to assess whether activity is reduced consistent with biallelic disease.",
+          "why": "Reduced enzyme activity would support biallelic involvement when phase cannot be resolved from the panel report.",
+          "facts": [
+            4
+          ],
+          "cannot_show": "It cannot establish which variants are on which chromosome, nor confirm the variants explain the weakness."
+        }
+      },
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with low confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Every variant class it states is one the facts give",
+          "ok": true,
+          "detail": "It states no variant class."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true
+    },
+    {
+      "case": "C",
+      "shows": "Too little evidence for a lead",
+      "expect": "insufficient",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "The clinic's intake nurse confirmed that the person is not acutely unwell.",
+            "fact": 5
+          }
+        ],
+        "news2": null
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 33953,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 605,
+        "total_tokens": 772,
+        "completion_tokens": 167,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 5333,
+      "text": "{\"lead\":null,\"gaps\":[{\"gap\":\"No examination, symptom timeline or definition of 'tired' exists, so fatigue is uncharacterised.\",\"facts\":[1,3]},{\"gap\":\"No clinical genetic test report is available; the app summary does not state which genes or variants it covered.\",\"facts\":[2,4]}],\"next_check\":{\"type\":\"evidence\",\"check\":\"Arrange a paediatric history and examination covering onset, pattern and triggers of fatigue, exercise tolerance, muscle strength, and red flags such as breathlessness or weakness.\",\"why\":\"The symptom is undefined and no clinical assessment is on file, so this must precede any genetic work-up.\",\"facts\":[1,3,5],\"cannot_show\":\"It cannot establish or exclude an inherited condition; that would require targeted clinical genetic testing after assessment.\"}}",
+      "brief": {
+        "lead": null,
+        "gaps": [
+          {
+            "gap": "No examination, symptom timeline or definition of 'tired' exists, so fatigue is uncharacterised.",
+            "facts": [
+              1,
+              3
+            ]
+          },
+          {
+            "gap": "No clinical genetic test report is available; the app summary does not state which genes or variants it covered.",
+            "facts": [
+              2,
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "evidence",
+          "check": "Arrange a paediatric history and examination covering onset, pattern and triggers of fatigue, exercise tolerance, muscle strength, and red flags such as breathlessness or weakness.",
+          "why": "The symptom is undefined and no clinical assessment is on file, so this must precede any genetic work-up.",
+          "facts": [
+            1,
+            3,
+            5
+          ],
+          "cannot_show": "It cannot establish or exclude an inherited condition; that would require targeted clinical genetic testing after assessment."
+        }
+      },
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A step to gather evidence, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "No lead: the model judged the facts too thin for one."
+        },
+        {
+          "id": "classes",
+          "label": "Every variant class it states is one the facts give",
+          "ok": true,
+          "detail": "It states no variant class."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "insufficient",
+      "matchesExpect": true
+    },
+    {
+      "case": "D",
+      "shows": "An urgent presentation: a person first",
+      "expect": "urgent",
+      "gate": {
+        "status": "urgent",
+        "reasons": [
+          {
+            "text": "The lab flagged a result in fact 4 as critical.",
+            "fact": 4
+          },
+          {
+            "text": "Breathing rate (28 a minute) scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "Oxygen saturation (90%) scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "Pulse (134 a minute) scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "Consciousness (new confusion) scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "NEWS2 totals 15: high clinical risk, urgent or emergency response.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 15,
+          "complete": true,
+          "red": true,
+          "risk": "high"
+        }
+      },
+      "sent": false,
+      "matchesExpect": true
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 6315,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 654,
+        "total_tokens": 855,
+        "completion_tokens": 201,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 5537,
+      "text": "{\"lead\":{\"explanation\":\"Late-onset pattern consistent with adult-onset Pompe disease given proximal limb-girdle weakness plus GAA variants, though phase is unconfirmed.\",\"confidence\":\"moderate\",\"facts\":[1,3,4]},\"gaps\":[{\"gap\":\"Phase of the two GAA variants not established; carrier status vs biallelic disease unresolved.\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result to support the diagnosis.\",\"facts\":[4]}],\"next_check\":{\"type\":\"test\",\"check\":\"GAA enzyme activity (acid alpha-glucosidase) assay, ideally on a dried blood spot with leukocyte confirmation, to assess residual enzyme function.\",\"why\":\"Would clarify whether reduced activity supports biallelic disease alongside the variants in facts 3–4.\",\"facts\":[3,4],\"cannot_show\":\"It cannot establish variant phase or confirm the c.-32-13T>G and p.Arg854Ter variants are on different copies.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Late-onset pattern consistent with adult-onset Pompe disease given proximal limb-girdle weakness plus GAA variants, though phase is unconfirmed.",
+          "confidence": "moderate",
+          "facts": [
+            1,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Phase of the two GAA variants not established; carrier status vs biallelic disease unresolved.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result to support the diagnosis.",
+            "facts": [
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "GAA enzyme activity (acid alpha-glucosidase) assay, ideally on a dried blood spot with leukocyte confirmation, to assess residual enzyme function.",
+          "why": "Would clarify whether reduced activity supports biallelic disease alongside the variants in facts 3–4.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "It cannot establish variant phase or confirm the c.-32-13T>G and p.Arg854Ter variants are on different copies."
+        }
+      },
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with moderate confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Every variant class it states is one the facts give",
+          "ok": true,
+          "detail": "It states no variant class."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 12935,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 654,
+        "total_tokens": 850,
+        "completion_tokens": 196,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 5537,
+      "text": "{\"lead\":{\"explanation\":\"Late-onset pattern with proximal limb-girdle weakness plus two GAA variants is consistent with late-onset Friedreich ataxia, but phase is unproven so biallelic disease is not established.\",\"confidence\":\"low\",\"facts\":[1,3,4]},\"gaps\":[{\"gap\":\"Phase of the two GAA variants unknown; diagnosis requires them on opposite copies.\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result to support or refute biallelic involvement.\",\"facts\":[4]}],\"next_check\":{\"type\":\"test\",\"check\":\"GAA enzyme activity assay in blood leukocytes, to test for reduced frataxin function consistent with biallelic GAA involvement.\",\"why\":\"Phase is unresolved and enzyme activity is the functional evidence needed to support a diagnosis.\",\"facts\":[3,4],\"cannot_show\":\"It cannot establish variant phase or distinguish carrier status from early disease on its own.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Late-onset pattern with proximal limb-girdle weakness plus two GAA variants is consistent with late-onset Friedreich ataxia, but phase is unproven so biallelic disease is not established.",
+          "confidence": "low",
+          "facts": [
+            1,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Phase of the two GAA variants unknown; diagnosis requires them on opposite copies.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result to support or refute biallelic involvement.",
+            "facts": [
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "GAA enzyme activity assay in blood leukocytes, to test for reduced frataxin function consistent with biallelic GAA involvement.",
+          "why": "Phase is unresolved and enzyme activity is the functional evidence needed to support a diagnosis.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "It cannot establish variant phase or distinguish carrier status from early disease on its own."
+        }
+      },
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with low confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Every variant class it states is one the facts give",
+          "ok": true,
+          "detail": "It states no variant class."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 5549,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 654,
+        "total_tokens": 833,
+        "completion_tokens": 179,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 5537,
+      "text": "{\"lead\":{\"explanation\":\"Late-onset pattern consistent with adult-onset Pompe disease given proximal limb-girdle weakness plus GAA variants, though phase is unconfirmed.\",\"confidence\":\"moderate\",\"facts\":[1,3]},\"gaps\":[{\"gap\":\"Variant phase not established; biallelic disease not confirmed.\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result to support diagnosis.\",\"facts\":[4]}],\"next_check\":{\"type\":\"test\",\"check\":\"GAA enzyme activity assay on dried blood spot or leukocytes, plus linkage/phase analysis of the two GAA variants.\",\"why\":\"Confirms or excludes biallelic GAA-related disease and resolves the diagnostic uncertainty behind the panel finding.\",\"facts\":[3,4],\"cannot_show\":\"Severity, respiratory involvement, or current disease status; it will not assess breathing or need for urgent care.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Late-onset pattern consistent with adult-onset Pompe disease given proximal limb-girdle weakness plus GAA variants, though phase is unconfirmed.",
+          "confidence": "moderate",
+          "facts": [
+            1,
+            3
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Variant phase not established; biallelic disease not confirmed.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result to support diagnosis.",
+            "facts": [
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "GAA enzyme activity assay on dried blood spot or leukocytes, plus linkage/phase analysis of the two GAA variants.",
+          "why": "Confirms or excludes biallelic GAA-related disease and resolves the diagnostic uncertainty behind the panel finding.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "Severity, respiratory involvement, or current disease status; it will not assess breathing or need for urgent care."
+        }
+      },
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with moderate confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Every variant class it states is one the facts give",
+          "ok": true,
+          "detail": "It states no variant class."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 36753,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 654,
+        "total_tokens": 863,
+        "completion_tokens": 209,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 5537,
+      "text": "{\"lead\":{\"explanation\":\"Late-onset pattern with proximal weakness fits a possible GAA-related condition, but the two variants are unphased, so biallelic disease is not established.\",\"confidence\":\"low\",\"facts\":[1,3,4]},\"gaps\":[{\"gap\":\"Phase of the two GAA variants is unknown; they could be in trans (two copies) or cis (one copy).\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result is available to support or refute biallelic involvement.\",\"facts\":[4]}],\"next_check\":{\"type\":\"test\",\"check\":\"GAA enzyme activity assay, ideally with phasing analysis of the two variants (e.g., parental segregation testing), to determine whether both copies of the gene are affected.\",\"why\":\"Phase and enzyme activity are the missing evidence needed before any diagnosis can be considered established.\",\"facts\":[3,4],\"cannot_show\":\"It cannot establish a clinical diagnosis of any specific condition or predict disease course; clinical correlation remains required.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Late-onset pattern with proximal weakness fits a possible GAA-related condition, but the two variants are unphased, so biallelic disease is not established.",
+          "confidence": "low",
+          "facts": [
+            1,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Phase of the two GAA variants is unknown; they could be in trans (two copies) or cis (one copy).",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result is available to support or refute biallelic involvement.",
+            "facts": [
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "GAA enzyme activity assay, ideally with phasing analysis of the two variants (e.g., parental segregation testing), to determine whether both copies of the gene are affected.",
+          "why": "Phase and enzyme activity are the missing evidence needed before any diagnosis can be considered established.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "It cannot establish a clinical diagnosis of any specific condition or predict disease course; clinical correlation remains required."
+        }
+      },
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with low confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Every variant class it states is one the facts give",
+          "ok": true,
+          "detail": "It states no variant class."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 8233,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 654,
+        "total_tokens": 890,
+        "completion_tokens": 236,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 5537,
+      "text": "{\"lead\":{\"explanation\":\"Late-onset pattern with proximal limb-girdle weakness plus two GAA variants is consistent with late-onset Friedreich ataxia, but phase is unproven, so biallelic disease is not established.\",\"confidence\":\"low\",\"facts\":[1,3,4]},\"gaps\":[{\"gap\":\"Variant phase unknown; one variant each on different copies is required to confirm biallelic GAA disease.\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result to support or refute a diagnosis.\",\"facts\":[4]},{\"gap\":\"No examination detail on reflexes, sensory findings, or cardiomyopathy assessment in the facts.\",\"facts\":[1]}],\"next_check\":{\"type\":\"test\",\"check\":\"GAA frataxin enzyme activity assay (and parental/carrier testing to establish phase of the two GAA variants), covering whether both variants are in trans.\",\"why\":\"Phase and enzyme activity are the missing evidence needed to confirm or exclude biallelic GAA-related disease.\",\"facts\":[3,4],\"cannot_show\":\"It cannot establish disease severity, prognosis, or exclude other causes of the weakness.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Late-onset pattern with proximal limb-girdle weakness plus two GAA variants is consistent with late-onset Friedreich ataxia, but phase is unproven, so biallelic disease is not established.",
+          "confidence": "low",
+          "facts": [
+            1,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Variant phase unknown; one variant each on different copies is required to confirm biallelic GAA disease.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result to support or refute a diagnosis.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No examination detail on reflexes, sensory findings, or cardiomyopathy assessment in the facts.",
+            "facts": [
+              1
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "GAA frataxin enzyme activity assay (and parental/carrier testing to establish phase of the two GAA variants), covering whether both variants are in trans.",
+          "why": "Phase and enzyme activity are the missing evidence needed to confirm or exclude biallelic GAA-related disease.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "It cannot establish disease severity, prognosis, or exclude other causes of the weakness."
+        }
+      },
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with low confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Every variant class it states is one the facts give",
+          "ok": true,
+          "detail": "It states no variant class."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true
+    }
+  ]
+}
