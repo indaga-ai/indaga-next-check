@@ -181,3 +181,33 @@ test('signature lookups accept both id styles and forward them to NEAR AI with t
   s.close();
   assert.ok(seen.every((x) => x.url.includes('/signature/') && x.url.endsWith('?signing_algo=ed25519') && x.auth === `Bearer ${KEY}`));
 });
+
+test('hosted relay: the rewritten URL is restored to the path the browser asked for', async () => {
+  const { originalUrl } = await import('../api/relay.mjs');
+  assert.equal(originalUrl('/api/relay?__path=config'), '/api/config');
+  assert.equal(originalUrl('/api/relay?__path=attestation&nonce=ab'), '/api/attestation?nonce=ab');
+  assert.equal(originalUrl('/api/relay?nonce=ab&__path=pccs%2Ftdx%2Fcertification%2Fv4%2Ftcb'), '/api/pccs/tdx/certification/v4/tcb?nonce=ab');
+  assert.equal(originalUrl('/api/relay?__path=brief'), '/api/brief');
+  assert.equal(originalUrl('/api/config'), '/api/config');
+});
+
+test('hosted relay: a request through the Vercel function reaches the same handler, and the hosted page gets the same security policy', async () => {
+  const { readFileSync } = await import('node:fs');
+  const relay = (await import('../api/relay.mjs')).default;
+  const s = createServer((req, res) => relay(req, res));
+  await new Promise((r) => s.listen(0, '127.0.0.1', r));
+  const b = `http://127.0.0.1:${s.address().port}`;
+  const r = await fetch(`${b}/api/relay?__path=config`);
+  const cfg = await r.json();
+  s.close();
+  assert.equal(r.status, 200);
+  assert.equal(cfg.model, DEFAULT_MODEL);
+  const vercel = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
+  const page = Object.fromEntries(vercel.headers[0].headers.map((h) => [h.key.toLowerCase(), h.value]));
+  for (const h of ['content-security-policy', 'referrer-policy', 'x-content-type-options', 'permissions-policy']) {
+    assert.equal(page[h], r.headers.get(h), `${h}: the static page and the relay must match`);
+  }
+  assert.match(page['x-robots-tag'], /noindex/);
+  assert.equal(vercel.outputDirectory, 'web');
+  assert.equal(vercel.rewrites[0].destination, '/api/relay?__path=:path*');
+});

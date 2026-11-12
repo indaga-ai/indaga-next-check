@@ -55,6 +55,8 @@ async function send(c, att) {
   const responseBytes = new Uint8Array(await r.arrayBuffer());
   if (!r.ok) throw new Error(`HTTP ${r.status}: ${new TextDecoder().decode(responseBytes).slice(0, 300)}`);
   const elapsedMs = Date.now() - t0;
+  // NEAR AI's billing looks a request up by the UUID in this header (POST /v1/billing/costs).
+  const inferenceId = r.headers.get('inference-id');
   const reply = JSON.parse(new TextDecoder().decode(responseBytes));
   const choice = reply.choices?.[0];
   const text = decryptWith(client.secretKey, choice?.message?.content || '');
@@ -65,7 +67,7 @@ async function send(c, att) {
     else sig = await s.json();
   }
   const signature = verifyReplySignature({ sig, model, requestBytes, responseBytes, key: att.key });
-  return { text, elapsedMs, finish: choice?.finish_reason ?? null, usage: reply.usage ?? null, requestBytes: requestBytes.length, signature };
+  return { text, elapsedMs, finish: choice?.finish_reason ?? null, usage: reply.usage ?? null, requestBytes: requestBytes.length, signature, inferenceId, replyId: reply.id ?? null };
 }
 
 const results = [];
@@ -101,7 +103,7 @@ for (const c of cases) {
   try {
     const out = await send(c, att);
     record.sent = true;
-    Object.assign(record, { model, elapsedMs: out.elapsedMs, finish: out.finish, usage: out.usage, requestBytes: out.requestBytes, text: out.text });
+    Object.assign(record, { model, elapsedMs: out.elapsedMs, finish: out.finish, usage: out.usage, requestBytes: out.requestBytes, inferenceId: out.inferenceId, replyId: out.replyId, text: out.text });
     console.log(`\n   Sent ${out.requestBytes.toLocaleString()} bytes of ciphertext (E2EE v3). Reply in ${(out.elapsedMs / 1000).toFixed(1)} s, finish ${out.finish}, tokens ${out.usage?.total_tokens ?? '?'}. Decrypted here:`);
     console.log(indent(out.text));
     const { brief, error } = parseBrief(out.text);
@@ -124,6 +126,26 @@ for (const c of cases) {
     console.error(`\n   The request failed: ${e.message}`);
     record.error = e.message;
     failed = true;
+  }
+}
+
+// What NEAR AI's own billing charged for the briefs sent, by inference id. Its records can lag a little.
+const sentIds = results.map((r) => r.inferenceId).filter(Boolean);
+if (key && sentIds.length) {
+  await new Promise((ok) => setTimeout(ok, 3000));
+  try {
+    const r = await fetch(`${base}/billing/costs`, { method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` }, body: JSON.stringify({ requestIds: sentIds }) });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data?.error?.message || `HTTP ${r.status}`);
+    const byId = new Map((data.requests || []).map((x) => [x.requestId, x.costNanoUsd]));
+    let total = 0;
+    for (const rec of results.filter((x) => x.inferenceId)) {
+      rec.costUsd = (byId.get(rec.inferenceId) ?? 0) / 1e9;
+      total += rec.costUsd;
+    }
+    console.log(`\nCost from NEAR AI's billing: $${total.toFixed(6)} for ${sentIds.length} brief(s)${data.warning ? ` (note: ${data.warning})` : ''}.`);
+  } catch (e) {
+    console.log(`\nCost lookup unavailable: ${e.message}`);
   }
 }
 

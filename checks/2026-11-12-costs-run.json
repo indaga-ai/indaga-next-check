@@ -1,0 +1,384 @@
+{
+  "when": "2026-11-12T19:07:35.796Z",
+  "model": "z-ai/glm-5.3-flash",
+  "noGate": false,
+  "results": [
+    {
+      "case": "A",
+      "shows": "A well-supported lead",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "His paediatrician confirmed that the person is not acutely unwell.",
+            "fact": 5
+          }
+        ],
+        "news2": null
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 15154,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 643,
+        "total_tokens": 889,
+        "completion_tokens": 246,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 5527,
+      "inferenceId": "3a0fe659-d6f1-53e3-891c-591ed3054ef7",
+      "replyId": "103b72a9508b406cbb2e999ac860cb60",
+      "text": "{\"lead\":{\"explanation\":\"Progressive proximal weakness with Gowers' sign and grossly raised creatine kinase suggests a dystrophinopathy (Duchenne muscular dystrophy); the MLPA was negative but cannot exclude a point mutation.\",\"confidence\":\"moderate\",\"facts\":[1,2,3,4]},\"gaps\":[{\"gap\":\"MLPA cannot detect single-letter changes or small insertions/deletions in the DMD gene, so a sequence-level variant remains unexcluded.\",\"facts\":[3,4]},{\"gap\":\"No muscle biopsy, EMG, or second-line genetic testing results are available to confirm the diagnosis.\",\"facts\":[1,2]}],\"next_check\":{\"type\":\"test\",\"check\":\"DMD gene full sequencing (next-generation or Sanger) covering all 79 exons plus splice-site and deep intronic regions, to detect single-letter changes and small insertions/deletions.\",\"why\":\"The copy-number test was negative but explicitly cannot detect small sequence changes, which are a common cause of dystrophinopathy.\",\"facts\":[3,4],\"cannot_show\":\"It cannot confirm dystrophin protein loss or exclude other muscular dystrophy genes if DMD sequencing is negative.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Progressive proximal weakness with Gowers' sign and grossly raised creatine kinase suggests a dystrophinopathy (Duchenne muscular dystrophy); the MLPA was negative but cannot exclude a point mutation.",
+          "confidence": "moderate",
+          "facts": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "MLPA cannot detect single-letter changes or small insertions/deletions in the DMD gene, so a sequence-level variant remains unexcluded.",
+            "facts": [
+              3,
+              4
+            ]
+          },
+          {
+            "gap": "No muscle biopsy, EMG, or second-line genetic testing results are available to confirm the diagnosis.",
+            "facts": [
+              1,
+              2
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "DMD gene full sequencing (next-generation or Sanger) covering all 79 exons plus splice-site and deep intronic regions, to detect single-letter changes and small insertions/deletions.",
+          "why": "The copy-number test was negative but explicitly cannot detect small sequence changes, which are a common cause of dystrophinopathy.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "It cannot confirm dystrophin protein loss or exclude other muscular dystrophy genes if DMD sequencing is negative."
+        }
+      },
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with moderate confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Every variant class it states is one the facts give",
+          "ok": true,
+          "detail": "It states no variant class."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true,
+      "costUsd": 0.00017444
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 7757,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 654,
+        "total_tokens": 843,
+        "completion_tokens": 189,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 5537,
+      "inferenceId": "09cbf003-a282-509d-9f1a-4d5ae0cd6daa",
+      "replyId": "a5c86dd8b1a641be97ea71d4507ac46c",
+      "text": "{\"lead\":{\"explanation\":\"Late-onset pattern with proximal limb-girdle weakness plus one pathogenic and one splice-region GAA variant is consistent with late-onset Pompe disease, but phase is unproven and enzyme activity is missing.\",\"confidence\":\"low\",\"facts\":[1,3,4]},\"gaps\":[{\"gap\":\"Variant phase unknown; diagnosis requires both variants in trans.\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result to corroborate the molecular findings.\",\"facts\":[4]}],\"next_check\":{\"type\":\"test\",\"check\":\"GAA enzyme activity assay on dried blood spot or leukocytes, covering residual enzyme level; if low, confirm phase via parental segregation testing.\",\"why\":\"Low enzyme activity would support biallelic disease and prompt confirmation that the variants are on different copies.\",\"facts\":[3,4],\"cannot_show\":\"It cannot establish disease severity, respiratory involvement, or predict progression.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Late-onset pattern with proximal limb-girdle weakness plus one pathogenic and one splice-region GAA variant is consistent with late-onset Pompe disease, but phase is unproven and enzyme activity is missing.",
+          "confidence": "low",
+          "facts": [
+            1,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Variant phase unknown; diagnosis requires both variants in trans.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result to corroborate the molecular findings.",
+            "facts": [
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "GAA enzyme activity assay on dried blood spot or leukocytes, covering residual enzyme level; if low, confirm phase via parental segregation testing.",
+          "why": "Low enzyme activity would support biallelic disease and prompt confirmation that the variants are on different copies.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "It cannot establish disease severity, respiratory involvement, or predict progression."
+        }
+      },
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with low confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Every variant class it states is one the facts give",
+          "ok": true,
+          "detail": "It states pathogenic, as the facts do."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true,
+      "costUsd": 0.00014682
+    },
+    {
+      "case": "C",
+      "shows": "Too little evidence for a lead",
+      "expect": "insufficient",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "The clinic's intake nurse confirmed that the person is not acutely unwell.",
+            "fact": 5
+          }
+        ],
+        "news2": null
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 27227,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 605,
+        "total_tokens": 772,
+        "completion_tokens": 167,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 5333,
+      "inferenceId": "3cb81d0e-4d33-5613-a240-1ade23e1ae8b",
+      "replyId": "5bfb090535ca4220b3ab8064a954e799",
+      "text": "{\"lead\":null,\"gaps\":[{\"gap\":\"No clinical examination, symptom timeline or definition of 'tired' exists, so fatigue is uncharacterised.\",\"facts\":[1,3]},{\"gap\":\"No clinical genetic test report is available; the app summary does not state which genes or variants were tested.\",\"facts\":[2,4]}],\"next_check\":{\"type\":\"evidence\",\"check\":\"Full history and physical examination of the child, including exercise tolerance, symptom onset and progression, strength testing and cardiovascular and neurological examination.\",\"why\":\"Fatigue during sports is uncharacterised and no clinical assessment is on file; this determines whether any genetic workup is warranted.\",\"facts\":[1,3],\"cannot_show\":\"It cannot establish or exclude a specific genetic diagnosis, and cannot interpret the consumer app's unlisted test coverage.\"}}",
+      "brief": {
+        "lead": null,
+        "gaps": [
+          {
+            "gap": "No clinical examination, symptom timeline or definition of 'tired' exists, so fatigue is uncharacterised.",
+            "facts": [
+              1,
+              3
+            ]
+          },
+          {
+            "gap": "No clinical genetic test report is available; the app summary does not state which genes or variants were tested.",
+            "facts": [
+              2,
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "evidence",
+          "check": "Full history and physical examination of the child, including exercise tolerance, symptom onset and progression, strength testing and cardiovascular and neurological examination.",
+          "why": "Fatigue during sports is uncharacterised and no clinical assessment is on file; this determines whether any genetic workup is warranted.",
+          "facts": [
+            1,
+            3
+          ],
+          "cannot_show": "It cannot establish or exclude a specific genetic diagnosis, and cannot interpret the consumer app's unlisted test coverage."
+        }
+      },
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A step to gather evidence, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "No lead: the model judged the facts too thin for one."
+        },
+        {
+          "id": "classes",
+          "label": "Every variant class it states is one the facts give",
+          "ok": true,
+          "detail": "It states no variant class."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "insufficient",
+      "matchesExpect": true,
+      "costUsd": 0.0001319
+    }
+  ]
+}

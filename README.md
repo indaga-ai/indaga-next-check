@@ -30,6 +30,8 @@ You need Node 20.19 or later.
 | `NEARAI_API_KEY=… npm run brief -- --case D --no-gate` | **For comparison only.** It sends the urgent case to the model without the rules, to see what the model alone says |
 | `npm run verify-tee` | A fresh hardware report for the model, checked from this computer |
 
+With a key, `npm run brief` also records each request's NEAR AI inference id and prints what NEAR AI's billing charged for the briefs.
+
 ## The four made-up cases
 
 Every person, date, letter and result is invented. Cases A, B and C reuse the fictional vignettes from Indaga's 12 Nov 2026 four-case model test (P03, P02 and P05), with a source added to each fact. Case D was written for this prototype. The published case from that test (P07) is not used.
