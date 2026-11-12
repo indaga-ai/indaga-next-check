@@ -1,0 +1,150 @@
+{
+  "when": "2026-11-12T18:34:12.470Z",
+  "model": "z-ai/glm-5.3-flash",
+  "noGate": true,
+  "results": [
+    {
+      "case": "D",
+      "shows": "An urgent presentation: a person first",
+      "expect": "urgent",
+      "gate": {
+        "status": "urgent",
+        "reasons": [
+          {
+            "text": "The lab flagged a result in fact 4 as critical.",
+            "fact": 4
+          },
+          {
+            "text": "Breathing rate 28 a minute scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "Oxygen saturation 90% scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "Pulse 134 a minute scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "Consciousness new confusion scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "NEWS2 totals 15: high clinical risk, urgent or emergency response.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 15,
+          "complete": true,
+          "red": true,
+          "risk": "high"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 9767,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 648,
+        "total_tokens": 854,
+        "completion_tokens": 206,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 5565,
+      "text": "{\"lead\":{\"explanation\":\"Exertional rhabdomyolysis with hyperkalaemia and possible sepsis; recurrent exercise/ fasting-triggered episodes suggest an inherited metabolic myopathy, but this is unconfirmed.\",\"confidence\":\"low\",\"facts\":[1,2,3,4]},\"gaps\":[{\"gap\":\"No genetic testing has been performed, so any inherited metabolic cause is unverified.\",\"facts\":[5]},{\"gap\":\"No formal examination, acid-base or infection workup is documented in the facts.\",\"facts\":[2,4]}],\"next_check\":{\"type\":\"handover\",\"check\":\"Immediate handover to the treating emergency team for management of critical hyperkalaemia (6.6 mmol/L), rhabdomyolysis and abnormal observations.\",\"why\":\"The patient is acutely unwell with critical potassium and unstable vital signs; this must precede any genetic investigation.\",\"facts\":[2,4],\"cannot_show\":\"Whether the recurrent episodes are due to an inherited metabolic myopathy.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Exertional rhabdomyolysis with hyperkalaemia and possible sepsis; recurrent exercise/ fasting-triggered episodes suggest an inherited metabolic myopathy, but this is unconfirmed.",
+          "confidence": "low",
+          "facts": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "No genetic testing has been performed, so any inherited metabolic cause is unverified.",
+            "facts": [
+              5
+            ]
+          },
+          {
+            "gap": "No formal examination, acid-base or infection workup is documented in the facts.",
+            "facts": [
+              2,
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "handover",
+          "check": "Immediate handover to the treating emergency team for management of critical hyperkalaemia (6.6 mmol/L), rhabdomyolysis and abnormal observations.",
+          "why": "The patient is acutely unwell with critical potassium and unstable vital signs; this must precede any genetic investigation.",
+          "facts": [
+            2,
+            4
+          ],
+          "cannot_show": "Whether the recurrent episodes are due to an inherited metabolic myopathy."
+        }
+      },
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A handover to the treating team, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with low confidence."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "urgent",
+      "matchesExpect": true
+    }
+  ]
+}

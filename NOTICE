@@ -1,0 +1,17 @@
+Indaga Next Check
+Code: MIT licence (see LICENSE).
+
+Reused from DNA Confidential (private-dna-reading, commit e5726b69942f0825e590101e20f29f4f337d434a, MIT, by Indaga):
+src/tee/*, src/util/bytes.mjs, server/errors.mjs, server/ratelimit.mjs, scripts/build.mjs, scripts/check-bundle.mjs,
+scripts/verify-tee.mjs, test/attestation.test.mjs, test/e2ee.test.mjs and test/fixtures/*, unchanged; server/handler.mjs
+and server/stand-in.mjs, adapted. NEAR AI's inference-sdk (MIT) was DNA Confidential's protocol reference, and its
+published Ed25519 test vector is in test/fixtures/.
+
+Not covered by the MIT licence:
+- The Indaga name and logo (the dial in web/index.html and web/icon.svg) are Indaga's (CryptoSvit).
+- The fonts in web/fonts/ are under the SIL Open Font License 1.1: Geist and Geist Mono (Vercel, OFL-Geist.txt) and
+  Space Grotesk (The Space Grotesk Project Authors, OFL-SpaceGrotesk.txt).
+- The NEWS2 bands and thresholds in src/triage/urgency.mjs are from the Royal College of Physicians' National Early
+  Warning Score (NEWS) 2, 2017, which the RCP allows to be used with acknowledgement.
+
+The cases in src/cases/cases.mjs are invented. None is a real patient or a published case report.

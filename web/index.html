@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Next Check · Indaga</title>
+  <meta name="description" content="Research prototype on made-up rare-disease cases: fixed rules check for urgency first, then an AI reads the numbered facts inside verified hardware and proposes one next check for a clinician to review.">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/Geist-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="dist/app.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <div class="brand">
+        <a class="logo" href="https://indaga.ai" rel="noopener" aria-label="Indaga">
+          <!-- The Indaga mark: the site header's dial. Ring, ticks, hub and hand take the ink; the arc is iris. -->
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <circle cx="16" cy="16" r="13" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M16 3a13 13 0 0 1 9.2 22.2" stroke="#6878f3" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M16 4.5v2.2M27.5 16h-2.2M16 27.5v-2.2M4.5 16h2.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="16" cy="16" r="1.7" fill="currentColor"/>
+            <path d="M16 16l4.5-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <span class="wordmark">Indaga</span>
+        </a>
+        <span class="product">Next Check</span>
+      </div>
+      <nav>
+        <a href="#how">How it works</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <p class="overline">Research prototype · made-up cases only</p>
+      <h1>One next check, for a clinician to review</h1>
+      <p class="lede">Pick a made-up rare-disease case. Fixed rules on this page check first whether the person may be acutely unwell. If so, the case goes to a person and no AI is asked. Otherwise an AI reads the numbered facts inside verified hardware and returns a brief: the leading explanation, the gaps in the evidence, and one next check, each tied to the facts.</p>
+      <p class="banner warn"><strong>Not for patient care.</strong> Every case is invented. Nothing here is clinically validated: the four-case model test it builds on is exploratory, and no specialist has reviewed it yet.</p>
+      <p id="mode-banner" class="banner" hidden></p>
+    </section>
+
+    <ol class="steps">
+      <li class="step" id="step-case">
+        <div class="step-head"><span class="num">1</span><h2>Pick a made-up case</h2></div>
+        <p class="hint">Each case shows one path: a well-supported lead, too little evidence, or an urgent presentation.</p>
+        <div class="cases" id="cases"></div>
+      </li>
+
+      <li class="step" id="step-facts" data-locked>
+        <div class="step-head"><span class="num">2</span><h2>The facts, numbered, with their sources</h2></div>
+        <p class="hint">Only these facts are sent to the AI, encrypted. The case's title and the path it shows stay on this page.</p>
+        <div id="facts"><p class="status">Pick a case first.</p></div>
+      </li>
+
+      <li class="step" id="step-urgency" data-locked>
+        <div class="step-head"><span class="num">3</span><h2>Is it urgent? Fixed rules decide, before any AI</h2></div>
+        <p class="hint">The AI never judges urgency. These rules read the observations with NEWS2 (adults), the lab's own critical flags, and a clinician's confirmation that the person is not acutely unwell.</p>
+        <div id="urgency"></div>
+      </li>
+
+      <li class="step" id="step-tee" data-locked>
+        <div class="step-head"><span class="num">4</span><h2>Check the hardware</h2></div>
+        <p class="hint">Your browser asks NEAR AI Cloud for a fresh hardware report on the model and checks it here: Intel's signature over the TDX quote, the model key inside it, the software it started with, and NVIDIA's verdict on the GPUs. The same checks as DNA Confidential.</p>
+        <button id="check-tee" class="primary" type="button" disabled>Check the hardware</button>
+        <div id="tee"></div>
+      </li>
+
+      <li class="step" id="step-brief" data-locked>
+        <div class="step-head"><span class="num">5</span><h2>Encrypt, send, and check the brief</h2></div>
+        <p class="hint">The facts are encrypted on this page to the attested model key. Our server relays ciphertext only. The reply comes back encrypted to a key this page made, signed by the attested key, and is checked here.</p>
+        <button id="send" class="primary" type="button" disabled>Encrypt and send</button>
+        <div id="brief"></div>
+      </li>
+    </ol>
+
+    <section class="how" id="how">
+      <h2>How it works</h2>
+      <ol>
+        <li><strong>Facts first.</strong> A case is a list of numbered facts, each with its source. The brief must cite them by number, and the page checks every citation.</li>
+        <li><strong>Urgency by fixed rules, not by the AI.</strong> A result the lab flagged as critical, or a NEWS2 score with a 3 in any parameter or a total of 5 or more (<a href="https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/" rel="noopener">Royal College of Physicians, 2017</a>), stops the case: a person first, no AI. A case goes on only when a complete adult NEWS2 score is low or a named clinician confirmed the person is not acutely unwell. Otherwise it is held.</li>
+        <li><strong>The hardware is checked before anything is sent.</strong> The browser verifies that the model key belongs to <code>z-ai/glm-5.3-flash</code> running in an Intel TDX confidential VM with its NVIDIA GPUs in confidential mode, bound to a fresh nonce. If any check fails, nothing is sent.</li>
+        <li><strong>Only ciphertext on the way.</strong> The facts are encrypted to that key with NEAR AI's end-to-end encryption (version 3). The relay adds the API key and checks the request's fixed shape; it cannot read it.</li>
+        <li><strong>The brief is checked on the page.</strong> One JSON brief; exactly one next check, with why and what it cannot show; every point citing this case's facts; a lead that states its confidence. Flags point at wording about doses, treatment or a settled diagnosis. Then the reply's signature is verified against the attested key.</li>
+      </ol>
+      <h3>What this does not show</h3>
+      <ul>
+        <li><strong>That the advice is right.</strong> The checks cover form and traceability. Whether the next check is the right one is the clinician's call; a study with clinicians would have to measure that.</li>
+        <li><strong>That the urgency rules are complete.</strong> They check only what they read. NEWS2 is for adults and reads observations, not blood results; a child goes on only with a clinician's confirmation.</li>
+        <li><strong>Anything about real patients.</strong> The cases are invented. Real use would need clinical governance, consent and a reviewed data path.</li>
+        <li><strong>The hardware makers and the model's software.</strong> The attestation proves which hardware and measured software hold the key. It trusts Intel's and NVIDIA's keys, and it does not prove that the software has no bugs.</li>
+      </ul>
+    </section>
+
+    <footer class="foot">
+      <p>Built by <a href="https://indaga.ai" rel="noopener">Indaga</a>, an AI-native company building personalized medicine. Research prototype on made-up cases; not medical advice, not for patient care.</p>
+      <p>The encryption and attestation code is DNA Confidential's, Indaga's NEAR HACKATHON entry, reused unchanged.</p>
+    </footer>
+  </main>
+</body>
+</html>

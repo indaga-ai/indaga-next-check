@@ -1,0 +1,15 @@
+{
+  "source": "NEAR AI inference-sdk (MIT), test-fixtures/e2ee-v3.json, Ed25519 vector: public deterministic test keys only",
+  "signing_algo": "ed25519",
+  "suite_id": 2,
+  "model_secret": "9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60",
+  "model_public": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+  "reply_secret": "0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b",
+  "reply_public": "66be7e332c7a453332bd9d0a7f7db055f5c5ef1a06ada66d98b39fb6810c473a",
+  "ephemeral_secret": "0303030303030303030303030303030303030303030303030303030303030303",
+  "nonce": "000102030405060708090a0b0c0d0e0f1011121314151617",
+  "aad": "6e65617261692d653265652d726571756573742d76330266be7e332c7a453332bd9d0a7f7db055f5c5ef1a06ada66d98b39fb6810c473a006d657373616765735b5d2e636f6e74656e74",
+  "plaintext": "E2EE v3: private prompt",
+  "ciphertext": "5dfedd3b6bd47f6fa28ee15d969d5bb0ea53774d488bdaf9df1c6e0124b3ef22000102030405060708090a0b0c0d0e0f1011121314151617952f1029d9facf0669005cd32fc9f3682f65e17b55d57abc02aeccf35eaabf4b8efe9979121175",
+  "field": "messages[].content"
+}
