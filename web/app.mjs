@@ -124,7 +124,7 @@ function renderUrgency(c) {
         el('p', { class: 'gate-title', text: 'Stop: a person first' }),
         el('p', { class: 'gate-action', text: 'Hand over to the treating team now. Genetic testing does not come first: the brief can be written once the treating team says the person is stable. No AI is asked.' }),
         reasonList(gate.reasons)),
-      gate.news2 ? news2Table(gate.news2) : null,
+      ...(gate.news2 ? [news2Table(gate.news2)] : []),
       beforeAfter(),
     );
     $('step-urgency').classList.remove('done');
@@ -140,7 +140,7 @@ function renderUrgency(c) {
         el('p', { class: 'gate-title', text: 'No urgent sign found by these rules' }),
         reasonList(gate.reasons),
         el('p', { class: 'hint', text: 'These rules check only NEWS2 for adults, the lab\'s own critical flags and a clinician\'s confirmation. They are not a triage system.' })),
-      gate.news2 ? news2Table(gate.news2) : null,
+      ...(gate.news2 ? [news2Table(gate.news2)] : []),
     );
     $('step-urgency').classList.add('done');
   }
