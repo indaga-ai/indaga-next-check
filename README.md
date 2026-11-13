@@ -109,6 +109,8 @@ the attested key; only then shows the brief
 - rate-limit counters: a client address and a time, dropped after a day. The limits are 12 briefs an hour and 40 a day per address, and 200 a day per server;
 - a ten-minute cache of Intel's public collateral.
 
+A hosted copy on Vercel also gets the platform's standard request logs: address, path and time, not bodies.
+
 ## The four invented cases
 
 Every person, date, letter and result is invented. None is a real patient or a published case report.
@@ -122,7 +124,7 @@ Every person, date, letter and result is invented. None is a real patient or a p
 
 ## What the checks showed on 12 Nov 2026
 
-The runs are saved in [`checks/`](checks/).
+The runs are saved in [`checks/`](checks/). In these records, `modelKey` is the model's public signing key, taken from the hardware report.
 - **Hardware.** Every attestation check passed for `z-ai/glm-5.3-flash` in every run. That covers Intel's signature over the TDX quote, the nonce and model key inside it, the measured software, NVIDIA's verdict, and NEAR's gateway.
 - **Cases A, B and C.**
   - Each request carried 5.3 to 6.2 kB of ciphertext.
@@ -181,7 +183,7 @@ Next Check and DNA Confidential are two separate projects by the same team, Inda
 ## Built with
 
 - **Runtime packages:** `@noble/ciphers`, `@noble/curves` and `@noble/hashes` 2.4.0, `@phala/dcap-qvl` 0.7.0 and `jose` 6.2.13. `esbuild` 0.28.2 builds the page bundle.
-- **NEAR AI's [inference-sdk](https://github.com/nearai/inference-sdk)** (MIT) was the protocol reference, and its published Ed25519 test vector is in `test/fixtures/`.
+- **NEAR AI's [inference-sdk](https://github.com/nearai/inference-sdk)** (MIT) was the protocol reference. Its published Ed25519 test vector, test-only keys included, is in `test/fixtures/`, with saved public hardware reports.
 - **NEWS2:** the Royal College of Physicians' [NEWS2](https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/) (2017).
 - **AI coding assistants:** the code was written with Claude Code and Codex, directed and reviewed by the team.
 
