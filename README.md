@@ -47,6 +47,8 @@ All four cases are invented. The page has no upload and takes no free text.
 | 7. On the same page, pick **case D** | The rules stop it and say to hand over to the treating team now. **Encrypt and send** stays off |
 | 8. `NEARAI_API_KEY=… npm run brief -- --case A,B,C,D --json checks/run.json` | The whole flow in the terminal: each check printed, a record saved, and what NEAR AI's billing charged |
 
+Case B's brief is sometimes rejected (3 of 10 runs on 13 Nov) because the model wrote a term the page does not accept from it. The page then names the failed check and shows no brief, and **Send again** asks for a new one.
+
 A key comes from [cloud.near.ai](https://cloud.near.ai). On 12 and 13 Nov 2026, NEAR AI's billing charged $0.00013 to $0.00020 a brief, for 600 to 770 tokens in and 150 to 300 out.
 
 ## What NEAR does here
@@ -145,6 +147,10 @@ The runs are saved in [`checks/`](checks/). In these records, `modelKey` is the 
   - Five of the six B briefs passed every check with verified signatures. Each said the report does not establish whether the variants are on different copies of the gene.
   - The sixth was rejected for writing "biallelic disease is not confirmed". The check is strict, so it also rejects a correct sentence that uses a phase term. The page does not show a rejected brief.
   - The check catches the standard terms only. A claim about phase in plain words would pass it; none of the six made one.
+- **More rejections on the evening of 13 Nov, and a tighter instruction.** The model more often added a forbidden term to an otherwise correct sentence.
+  - With the earlier instruction, [six B runs](checks/2026-11-13-b-runs-before.json) passed 3. Two wrote "biallelic", and one also "pathogenic".
+  - The instruction now lists every forbidden term and asks for any consequence in plain words. In the [rerun](checks/2026-11-13-rule7-run.json), B passed 7 of 10, A 3 of 3 and C 3 of 3, every signature verified, and D stopped. Each of the three rejected B briefs wrote "biallelic". None used a classification word.
+  - So about three B briefs in ten are still rejected. The page then names the failed check and shows no brief; **Send again** asks for a new one.
 
 These checks cover how the brief is produced and whether each point traces to a fact. **They do not show that the advice is right.** The cases come from an exploratory four-case model test with provisional author scores and no specialist review. Showing that the brief helps a clinician choose a safe, useful next check would need a study with clinicians, against a protocol they agree.
 
