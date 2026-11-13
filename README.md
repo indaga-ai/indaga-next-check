@@ -32,7 +32,9 @@ All four cases are invented. The page has no upload and takes no free text.
 
 ## Try it
 
-You need Node 20.19 or later. Steps 1 to 5 need no key.
+**In a browser, with no install:** [nextcheck.indaga.ai](https://nextcheck.indaga.ai) is a hosted copy with the attested model, so steps 6 and 7 below work there as written. It is planned to stay up through 25 Nov 2026.
+
+**On your computer:** you need Node 20.19 or later. Steps 1 to 5 need no key.
 
 | Do | See |
 |---|---|
@@ -169,7 +171,7 @@ Next Check and DNA Confidential are two separate projects by the same team, Inda
 | Rules before the AI | The plan comes from a fixed table of rules | Urgency: NEWS2 and the lab's critical flags |
 | Payment | Any coin, through NEAR Intents | None |
 | Built | 7–11 Nov 2026 | 12–13 Nov 2026 |
-| Demo | https://private-dna.indaga.ai | `npm start`, as above |
+| Demo | https://private-dna.indaga.ai | https://nextcheck.indaga.ai, or `npm start` as above |
 
 **Reused from DNA Confidential**, under its MIT licence, from commit e5726b69942f0825e590101e20f29f4f337d434a:
 - **unchanged:**
