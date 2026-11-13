@@ -5,7 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { parseBrief, checkBrief } from '../src/ai/brief.mjs';
-import { caseById, sourceClassifications } from '../src/cases/cases.mjs';
+import { caseById, sourceClassifications, sourcePhase } from '../src/cases/cases.mjs';
 
 const A = caseById('A');
 const good = () => ({
@@ -105,11 +105,11 @@ test('no false flags on lab values or on how a confirmatory test is described', 
 const B = caseById('B');
 const withLead = (explanation) => ({ ...good(), lead: { explanation, confidence: 'low', facts: [1] } });
 
-test('class check: the real misstated brief from the 12 Nov run fails, and only on its class', () => {
+test('class check: the real misstated brief from the 12 Nov run fails on its class (and on its phase wording)', () => {
   const { brief } = JSON.parse(readFileSync(new URL('./fixtures/brief-b-misstated-class.json', import.meta.url), 'utf8'));
   const result = checkBrief(brief, B);
   assert.equal(result.ok, false);
-  assert.deepEqual(result.checks.filter((check) => !check.ok).map((check) => check.id), ['classes']);
+  assert.deepEqual(result.checks.filter((check) => !check.ok).map((check) => check.id), ['classes', 'phase']);
 });
 
 test('class check: only the report supplies labels, and the model can still discuss the findings', () => {
@@ -161,4 +161,43 @@ test('a mixed source report cannot lend one variant’s classification to anothe
     ['GAA c.-32-13T>G', 'pathogenic'],
     ['GAA c.2560C>T', 'likely benign'],
   ]);
+});
+
+// The phase check: a live brief (12 Nov, 19:48 UTC) called case B's two variants "in trans", though the lab report
+// says phase was not established. Like the classifications, phase now comes only from the source report.
+test('phase check: the real brief that called the variants "in trans" fails, and only on phase', () => {
+  const { brief } = JSON.parse(readFileSync(new URL('./fixtures/brief-b-phase-in-trans.json', import.meta.url), 'utf8'));
+  const result = checkBrief(brief, B);
+  assert.equal(result.ok, false);
+  assert.deepEqual(result.checks.filter((check) => !check.ok).map((check) => check.id), ['phase']);
+});
+
+test('phase check: phase terms fail even negated or hypothetical, in any part of the brief', () => {
+  for (const text of [
+    'The two GAA variants are in trans.',
+    'The variants may be in cis.',
+    'Compound heterozygous GAA variants fit the picture.',
+    'This is not yet a biallelic finding.',
+    'If the variants are in trans, Pompe disease becomes more likely.',
+    'A trans configuration has not been shown.',
+    'The GAA findings may be bi-allelic.',
+  ]) {
+    assert.equal(ids(checkBrief(withLead(text), B)).phase, false, text);
+  }
+  const brief = good();
+  brief.next_check.why = 'Enzyme activity would support compound heterozygosity.';
+  assert.equal(ids(checkBrief(brief, B)).phase, false, 'the check covers the next check as well as the lead');
+});
+
+test('phase check: the gap in plain words passes, and the page takes phase from the source report', () => {
+  const brief = withLead('The two GAA findings and proximal weakness make Pompe disease a possibility.');
+  brief.lead.facts = [1, 3, 4];
+  brief.gaps[0].gap = 'The lab report does not establish whether the two variants are on different copies of the gene.';
+  brief.gaps[0].facts = [4];
+  assert.equal(checkBrief(brief, B).ok, true);
+  for (const text of ['Results in transit from the lab are pending.', 'Translation of the clinic letter is pending.']) {
+    assert.equal(ids(checkBrief(withLead(text), B)).phase, true, text);
+  }
+  assert.deepEqual(sourcePhase(B), [{ phase: 'not established by the lab', fact: 4, source: 'Genetics lab report, 6 Nov 2026: limitations' }]);
+  assert.deepEqual(sourcePhase(caseById('A')), []);
 });

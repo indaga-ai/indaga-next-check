@@ -1,0 +1,39 @@
+{
+  "note": "Case B's brief from the live run of 2026-11-12T19:48:53Z (checks/2026-11-12-source-classifications-run.json), as decrypted. Its lead calls the two GAA variants \"in trans\", though fact 4 says the lab did not establish phase. Every check of that run passed, which is why the phase check exists.",
+  "model": "z-ai/glm-5.3-flash",
+  "brief": {
+    "lead": {
+      "explanation": "Late-onset pattern with proximal weakness plus two reported GAA variants in trans is consistent with a biallelic GAA-related neuromuscular condition, though phase is unconfirmed.",
+      "confidence": "moderate",
+      "facts": [
+        1,
+        3,
+        4
+      ]
+    },
+    "gaps": [
+      {
+        "gap": "Phase of the two GAA variants is unestablished, so biallelic status is not confirmed.",
+        "facts": [
+          4
+        ]
+      },
+      {
+        "gap": "No GAA enzyme activity result is available to support the molecular findings.",
+        "facts": [
+          4
+        ]
+      }
+    ],
+    "next_check": {
+      "type": "test",
+      "check": "GAA enzyme activity assay, ideally with phasing analysis of the two variants (e.g. parental testing or long-read methods).",
+      "why": "Confirms biallelic involvement and functional support for the reported findings.",
+      "facts": [
+        3,
+        4
+      ],
+      "cannot_show": "Disease severity, progression rate, or current cardiac and respiratory involvement."
+    }
+  }
+}

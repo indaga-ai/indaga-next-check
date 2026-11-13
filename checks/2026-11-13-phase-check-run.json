@@ -1,0 +1,1253 @@
+{
+  "when": "2026-11-13T07:50:59.989Z",
+  "model": "z-ai/glm-5.3-flash",
+  "noGate": false,
+  "results": [
+    {
+      "case": "A",
+      "shows": "A well-supported lead",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "His paediatrician confirmed that the person is not acutely unwell.",
+            "fact": 5
+          }
+        ],
+        "news2": null
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 5770,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 749,
+        "total_tokens": 979,
+        "completion_tokens": 230,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 6589,
+      "inferenceId": "615c91d5-0bb3-5714-87ab-9198ee472f71",
+      "replyId": "839bfba5662c4780a30ff8febbb3b7dd",
+      "text": "{\"lead\":{\"explanation\":\"Progressive proximal muscle weakness with Gowers sign and markedly raised creatine kinase suggests a dystrophinopathy; the MLPA ruled out exon-level copy changes but small sequence changes remain possible.\",\"confidence\":\"moderate\",\"facts\":[1,2,3,4]},\"gaps\":[{\"gap\":\"MLPA cannot detect single-letter changes or small insertions/deletions in the DMD gene, so a sequence-level cause is not excluded.\",\"facts\":[3,4]},{\"gap\":\"No examination findings or formal muscle assessment are recorded beyond the referral history.\",\"facts\":[1]}],\"next_check\":{\"type\":\"test\",\"check\":\"Full DMD gene sequencing to detect small sequence changes (single-letter changes and small insertions/deletions) across all 79 exons.\",\"why\":\"The MLPA only excluded exon-level deletions or duplications; the reported limitations state it cannot detect small sequence changes, which could explain the presentation.\",\"facts\":[3,4],\"cannot_show\":\"It cannot exclude other dystrophy genes or non-genetic causes of the weakness, and it cannot establish disease severity or prognosis.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Progressive proximal muscle weakness with Gowers sign and markedly raised creatine kinase suggests a dystrophinopathy; the MLPA ruled out exon-level copy changes but small sequence changes remain possible.",
+          "confidence": "moderate",
+          "facts": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "MLPA cannot detect single-letter changes or small insertions/deletions in the DMD gene, so a sequence-level cause is not excluded.",
+            "facts": [
+              3,
+              4
+            ]
+          },
+          {
+            "gap": "No examination findings or formal muscle assessment are recorded beyond the referral history.",
+            "facts": [
+              1
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "Full DMD gene sequencing to detect small sequence changes (single-letter changes and small insertions/deletions) across all 79 exons.",
+          "why": "The MLPA only excluded exon-level deletions or duplications; the reported limitations state it cannot detect small sequence changes, which could explain the presentation.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "It cannot exclude other dystrophy genes or non-genetic causes of the weakness, and it cannot establish disease severity or prognosis."
+        }
+      },
+      "sourceClassifications": [],
+      "sourcePhase": [],
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with moderate confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Variant classifications come only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves variant classifications to the source report."
+        },
+        {
+          "id": "phase",
+          "label": "Phase comes only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves phase to the source report."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true,
+      "costUsd": 0.00017492
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 4453,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 770,
+        "total_tokens": 1038,
+        "completion_tokens": 268,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "reasoning_tokens": 51,
+        "completion_tokens_details": {
+          "reasoning_tokens": 51
+        }
+      },
+      "requestBytes": 6687,
+      "inferenceId": "2c4a79e9-15d4-5b18-bb1e-b0d213dc3073",
+      "replyId": "8c1d324022da4b41b8b3c3d6e75079c9",
+      "text": "{\"lead\":{\"explanation\":\"Slowly progressive proximal (hip and shoulder) weakness in an adult, with two reported GAA variants, fits late-onset Pompe disease; the source does not establish the variants sit on different gene copies.\",\"confidence\":\"moderate\",\"facts\":[1,3,4]},\"gaps\":[{\"gap\":\"Phase not established: the report does not show whether the two GAA variants are on different copies of the gene.\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result is available to support or refute the reported findings.\",\"facts\":[4]}],\"next_check\":{\"type\":\"test\",\"check\":\"GAA enzyme activity assay (acid alpha-glucosidase), ideally on a dried blood spot with lymphocyte confirmation, covering quantitative enzyme activity level.\",\"why\":\"Reduced GAA enzyme activity would support the reported findings and the clinical picture of progressive proximal weakness.\",\"facts\":[3,4],\"cannot_show\":\"It cannot establish whether the two variants are on different copies of the gene, and it cannot confirm the variants' reported classifications.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Slowly progressive proximal (hip and shoulder) weakness in an adult, with two reported GAA variants, fits late-onset Pompe disease; the source does not establish the variants sit on different gene copies.",
+          "confidence": "moderate",
+          "facts": [
+            1,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Phase not established: the report does not show whether the two GAA variants are on different copies of the gene.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result is available to support or refute the reported findings.",
+            "facts": [
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "GAA enzyme activity assay (acid alpha-glucosidase), ideally on a dried blood spot with lymphocyte confirmation, covering quantitative enzyme activity level.",
+          "why": "Reduced GAA enzyme activity would support the reported findings and the clinical picture of progressive proximal weakness.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "It cannot establish whether the two variants are on different copies of the gene, and it cannot confirm the variants' reported classifications."
+        }
+      },
+      "sourceClassifications": [
+        {
+          "variant": "GAA c.-32-13T>G",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        },
+        {
+          "variant": "GAA c.2560C>T (p.Arg854Ter)",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        }
+      ],
+      "sourcePhase": [
+        {
+          "phase": "not established by the lab",
+          "fact": 4,
+          "source": "Genetics lab report, 6 Nov 2026: limitations"
+        }
+      ],
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with moderate confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Variant classifications come only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves variant classifications to the source report."
+        },
+        {
+          "id": "phase",
+          "label": "Phase comes only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves phase to the source report."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true,
+      "costUsd": 0.0001956
+    },
+    {
+      "case": "C",
+      "shows": "Too little evidence for a lead",
+      "expect": "insufficient",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "The clinic's intake nurse confirmed that the person is not acutely unwell.",
+            "fact": 5
+          }
+        ],
+        "news2": null
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 3488,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 711,
+        "total_tokens": 875,
+        "completion_tokens": 164,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "reasoning_tokens": 1,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1
+        }
+      },
+      "requestBytes": 6395,
+      "inferenceId": "0792409e-edda-5e9e-85bb-fc924144b73b",
+      "replyId": "f651bf2e60854050a2b02b45be8ec9ca",
+      "text": "{\"lead\":null,\"gaps\":[{\"gap\":\"No examination, symptom timeline or definition of 'tired' is on file.\",\"facts\":[3]},{\"gap\":\"No clinical genetic test report exists; the app summary does not list genes or variants tested.\",\"facts\":[2,4]}],\"next_check\":{\"type\":\"evidence\",\"check\":\"Arrange a clinical history and physical examination of the child, covering exercise tolerance, what 'tired' means, symptom onset and progression, and strength testing.\",\"why\":\"The facts give only a parent's report of fatigue with no clinical assessment, so no explanation can be supported yet.\",\"facts\":[1,3],\"cannot_show\":\"It cannot establish or exclude any genetic cause, and the consumer app's 'no markers flagged' cannot be interpreted without knowing what it tested.\"}}",
+      "brief": {
+        "lead": null,
+        "gaps": [
+          {
+            "gap": "No examination, symptom timeline or definition of 'tired' is on file.",
+            "facts": [
+              3
+            ]
+          },
+          {
+            "gap": "No clinical genetic test report exists; the app summary does not list genes or variants tested.",
+            "facts": [
+              2,
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "evidence",
+          "check": "Arrange a clinical history and physical examination of the child, covering exercise tolerance, what 'tired' means, symptom onset and progression, and strength testing.",
+          "why": "The facts give only a parent's report of fatigue with no clinical assessment, so no explanation can be supported yet.",
+          "facts": [
+            1,
+            3
+          ],
+          "cannot_show": "It cannot establish or exclude any genetic cause, and the consumer app's 'no markers flagged' cannot be interpreted without knowing what it tested."
+        }
+      },
+      "sourceClassifications": [],
+      "sourcePhase": [],
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A step to gather evidence, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "No lead: the model judged the facts too thin for one."
+        },
+        {
+          "id": "classes",
+          "label": "Variant classifications come only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves variant classifications to the source report."
+        },
+        {
+          "id": "phase",
+          "label": "Phase comes only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves phase to the source report."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "insufficient",
+      "matchesExpect": true,
+      "costUsd": 0.00013888
+    },
+    {
+      "case": "D",
+      "shows": "An urgent presentation: a person first",
+      "expect": "urgent",
+      "gate": {
+        "status": "urgent",
+        "reasons": [
+          {
+            "text": "The lab flagged a result in fact 4 as critical.",
+            "fact": 4
+          },
+          {
+            "text": "Breathing rate (28 a minute) scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "Oxygen saturation (90%) scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "Pulse (134 a minute) scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "Consciousness (new confusion) scores 3 on NEWS2, a red score on its own.",
+            "fact": 2
+          },
+          {
+            "text": "NEWS2 totals 15: high clinical risk, urgent or emergency response.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 15,
+          "complete": true,
+          "red": true,
+          "risk": "high"
+        }
+      },
+      "sent": false,
+      "matchesExpect": true
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 7599,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 770,
+        "total_tokens": 1032,
+        "completion_tokens": 262,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "reasoning_tokens": 22,
+        "completion_tokens_details": {
+          "reasoning_tokens": 22
+        }
+      },
+      "requestBytes": 6687,
+      "inferenceId": "1cb73fa8-0f7b-5993-845e-81b63f1cb603",
+      "replyId": "36d22cb3a5504b1fb36fc70146b659d4",
+      "text": "{\"lead\":{\"explanation\":\"Late-onset Pompe disease fits: slowly progressive proximal hip and shoulder weakness with difficulty on stairs, plus two reported GAA variants. Phase is unproven and enzyme activity is missing, so this remains a possible, not established, explanation.\",\"confidence\":\"moderate\",\"facts\":[1,3,4]},\"gaps\":[{\"gap\":\"Phase not established: the report does not show whether the two variants sit on different copies of the gene, so a working diagnosis cannot rest on the panel alone.\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result is available to corroborate the reported variants.\",\"facts\":[4]}],\"next_check\":{\"type\":\"test\",\"check\":\"Order a GAA enzyme activity assay (acid alpha-glucosidase), ideally on a dried blood spot with lymphocyte confirmation, covering quantitative enzyme activity level.\",\"why\":\"Reduced GAA enzyme activity would support Pompe disease as the explanation for the proximal weakness and the reported GAA variants.\",\"facts\":[3,4,1],\"cannot_show\":\"It cannot establish whether the two variants are on different copies of the gene, and it cannot exclude other causes of the weakness.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Late-onset Pompe disease fits: slowly progressive proximal hip and shoulder weakness with difficulty on stairs, plus two reported GAA variants. Phase is unproven and enzyme activity is missing, so this remains a possible, not established, explanation.",
+          "confidence": "moderate",
+          "facts": [
+            1,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Phase not established: the report does not show whether the two variants sit on different copies of the gene, so a working diagnosis cannot rest on the panel alone.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result is available to corroborate the reported variants.",
+            "facts": [
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "Order a GAA enzyme activity assay (acid alpha-glucosidase), ideally on a dried blood spot with lymphocyte confirmation, covering quantitative enzyme activity level.",
+          "why": "Reduced GAA enzyme activity would support Pompe disease as the explanation for the proximal weakness and the reported GAA variants.",
+          "facts": [
+            3,
+            4,
+            1
+          ],
+          "cannot_show": "It cannot establish whether the two variants are on different copies of the gene, and it cannot exclude other causes of the weakness."
+        }
+      },
+      "sourceClassifications": [
+        {
+          "variant": "GAA c.-32-13T>G",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        },
+        {
+          "variant": "GAA c.2560C>T (p.Arg854Ter)",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        }
+      ],
+      "sourcePhase": [
+        {
+          "phase": "not established by the lab",
+          "fact": 4,
+          "source": "Genetics lab report, 6 Nov 2026: limitations"
+        }
+      ],
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with moderate confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Variant classifications come only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves variant classifications to the source report."
+        },
+        {
+          "id": "phase",
+          "label": "Phase comes only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves phase to the source report."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true,
+      "costUsd": 0.000157784
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 6666,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 770,
+        "total_tokens": 1064,
+        "completion_tokens": 294,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "reasoning_tokens": 36,
+        "completion_tokens_details": {
+          "reasoning_tokens": 36
+        }
+      },
+      "requestBytes": 6687,
+      "inferenceId": "a2d21210-60ed-554e-bfd5-ff268d69d32b",
+      "replyId": "b3323ce47f4048189e91565d548b27e8",
+      "text": "{\"lead\":{\"explanation\":\"Slowly progressive proximal (hip and shoulder) weakness with stairs difficulty in an adult, plus two reported GAA variants, fits late-onset Pompe disease, though the lab did not establish the variants sit on different gene copies.\",\"confidence\":\"moderate\",\"facts\":[1,3,4]},\"gaps\":[{\"gap\":\"Phase not established: the report does not show whether the two GAA variants are on different copies of the gene, so biallelic disease is not confirmed.\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result is available to support or exclude the diagnosis.\",\"facts\":[4]}],\"next_check\":{\"type\":\"test\",\"check\":\"Order a GAA enzyme activity assay (acid alpha-glucosidase activity, ideally on a dried blood spot or lymphocytes). It must measure residual GAA enzyme activity; if reduced, it supports Pompe disease and prompts confirming the variants are on different gene copies.\",\"why\":\"Enzyme activity is the functional evidence missing from the report and would corroborate the reported GAA findings regardless of phase.\",\"facts\":[3,4],\"cannot_show\":\"It cannot establish whether the two variants are on different copies of the gene, and it cannot by itself confirm the reported variant classifications.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Slowly progressive proximal (hip and shoulder) weakness with stairs difficulty in an adult, plus two reported GAA variants, fits late-onset Pompe disease, though the lab did not establish the variants sit on different gene copies.",
+          "confidence": "moderate",
+          "facts": [
+            1,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Phase not established: the report does not show whether the two GAA variants are on different copies of the gene, so biallelic disease is not confirmed.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result is available to support or exclude the diagnosis.",
+            "facts": [
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "Order a GAA enzyme activity assay (acid alpha-glucosidase activity, ideally on a dried blood spot or lymphocytes). It must measure residual GAA enzyme activity; if reduced, it supports Pompe disease and prompts confirming the variants are on different gene copies.",
+          "why": "Enzyme activity is the functional evidence missing from the report and would corroborate the reported GAA findings regardless of phase.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "It cannot establish whether the two variants are on different copies of the gene, and it cannot by itself confirm the reported variant classifications."
+        }
+      },
+      "sourceClassifications": [
+        {
+          "variant": "GAA c.-32-13T>G",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        },
+        {
+          "variant": "GAA c.2560C>T (p.Arg854Ter)",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        }
+      ],
+      "sourcePhase": [
+        {
+          "phase": "not established by the lab",
+          "fact": 4,
+          "source": "Genetics lab report, 6 Nov 2026: limitations"
+        }
+      ],
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with moderate confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Variant classifications come only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves variant classifications to the source report."
+        },
+        {
+          "id": "phase",
+          "label": "Phase comes only from the source report",
+          "ok": false,
+          "detail": "The generated brief uses phase wording (in trans, in cis, compound heterozygous or biallelic). Use the source report for phase."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true,
+      "costUsd": 0.000156376
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 10665,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 770,
+        "total_tokens": 1051,
+        "completion_tokens": 281,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "reasoning_tokens": 50,
+        "completion_tokens_details": {
+          "reasoning_tokens": 50
+        }
+      },
+      "requestBytes": 6687,
+      "inferenceId": "b4bfdac7-fbef-5313-b383-99a412e63f75",
+      "replyId": "1c5e3b1514d14859ad7e32c38d7dd34d",
+      "text": "{\"lead\":{\"explanation\":\"Slowly progressive hip and shoulder girdle weakness with two reported GAA variants fits late-onset Pompe disease, though the lab did not establish the variants sit on different gene copies and no enzyme result exists.\",\"confidence\":\"moderate\",\"facts\":[1,3,4]},\"gaps\":[{\"gap\":\"Phase not established: the report does not show whether the two GAA variants are on different copies of the gene.\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result is available to support or refute the reported findings.\",\"facts\":[4]}],\"next_check\":{\"type\":\"test\",\"check\":\"GAA enzyme activity assay (acid alpha-glucosidase), ideally on a dried blood spot with leukocyte confirmation, covering quantitative enzyme activity level.\",\"why\":\"Reduced GAA enzyme activity would corroborate the reported GAA variants as the cause of the proximal weakness and is the standard functional check when phase is unproven.\",\"facts\":[3,4],\"cannot_show\":\"It cannot establish whether the two variants are on different copies of the gene, nor confirm the exact clinical course or respiratory involvement.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Slowly progressive hip and shoulder girdle weakness with two reported GAA variants fits late-onset Pompe disease, though the lab did not establish the variants sit on different gene copies and no enzyme result exists.",
+          "confidence": "moderate",
+          "facts": [
+            1,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Phase not established: the report does not show whether the two GAA variants are on different copies of the gene.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result is available to support or refute the reported findings.",
+            "facts": [
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "GAA enzyme activity assay (acid alpha-glucosidase), ideally on a dried blood spot with leukocyte confirmation, covering quantitative enzyme activity level.",
+          "why": "Reduced GAA enzyme activity would corroborate the reported GAA variants as the cause of the proximal weakness and is the standard functional check when phase is unproven.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "It cannot establish whether the two variants are on different copies of the gene, nor confirm the exact clinical course or respiratory involvement."
+        }
+      },
+      "sourceClassifications": [
+        {
+          "variant": "GAA c.-32-13T>G",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        },
+        {
+          "variant": "GAA c.2560C>T (p.Arg854Ter)",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        }
+      ],
+      "sourcePhase": [
+        {
+          "phase": "not established by the lab",
+          "fact": 4,
+          "source": "Genetics lab report, 6 Nov 2026: limitations"
+        }
+      ],
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with moderate confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Variant classifications come only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves variant classifications to the source report."
+        },
+        {
+          "id": "phase",
+          "label": "Phase comes only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves phase to the source report."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true,
+      "costUsd": 0.000149876
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 12768,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 770,
+        "total_tokens": 1049,
+        "completion_tokens": 279,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "reasoning_tokens": 35,
+        "completion_tokens_details": {
+          "reasoning_tokens": 35
+        }
+      },
+      "requestBytes": 6687,
+      "inferenceId": "f0388042-ee56-53b4-a637-262c08e569f7",
+      "replyId": "5e290de36d1340ae9b38557582d9059f",
+      "text": "{\"lead\":{\"explanation\":\"Slowly progressive proximal (hip and shoulder) weakness in an adult with two reported GAA variants fits late-onset Pompe disease, though the lab did not establish whether the variants are on different copies of the gene.\",\"confidence\":\"moderate\",\"facts\":[1,3,4]},\"gaps\":[{\"gap\":\"Phase not established: the report does not show whether the two GAA variants sit on different copies of the gene, so a working diagnosis cannot rest on the panel alone.\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result is available to corroborate the reported findings.\",\"facts\":[4]}],\"next_check\":{\"type\":\"test\",\"check\":\"Order a GAA enzyme activity assay (acid alpha-glucosidase), ideally on a dried blood spot or lymphocytes, to confirm reduced enzyme activity.\",\"why\":\"Reduced GAA enzyme activity would support the reported GAA findings as the cause of the proximal weakness and is the standard confirmatory step when phase is unresolved.\",\"facts\":[3,4],\"cannot_show\":\"It cannot establish whether the two variants are on different copies of the gene, and it cannot by itself exclude other causes of the weakness.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Slowly progressive proximal (hip and shoulder) weakness in an adult with two reported GAA variants fits late-onset Pompe disease, though the lab did not establish whether the variants are on different copies of the gene.",
+          "confidence": "moderate",
+          "facts": [
+            1,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Phase not established: the report does not show whether the two GAA variants sit on different copies of the gene, so a working diagnosis cannot rest on the panel alone.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result is available to corroborate the reported findings.",
+            "facts": [
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "Order a GAA enzyme activity assay (acid alpha-glucosidase), ideally on a dried blood spot or lymphocytes, to confirm reduced enzyme activity.",
+          "why": "Reduced GAA enzyme activity would support the reported GAA findings as the cause of the proximal weakness and is the standard confirmatory step when phase is unresolved.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "It cannot establish whether the two variants are on different copies of the gene, and it cannot by itself exclude other causes of the weakness."
+        }
+      },
+      "sourceClassifications": [
+        {
+          "variant": "GAA c.-32-13T>G",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        },
+        {
+          "variant": "GAA c.2560C>T (p.Arg854Ter)",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        }
+      ],
+      "sourcePhase": [
+        {
+          "phase": "not established by the lab",
+          "fact": 4,
+          "source": "Genetics lab report, 6 Nov 2026: limitations"
+        }
+      ],
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with moderate confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Variant classifications come only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves variant classifications to the source report."
+        },
+        {
+          "id": "phase",
+          "label": "Phase comes only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves phase to the source report."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true,
+      "costUsd": 0.000148876
+    },
+    {
+      "case": "B",
+      "shows": "A lead with one decisive gap",
+      "expect": "lead",
+      "gate": {
+        "status": "clear",
+        "reasons": [
+          {
+            "text": "NEWS2 totals 0 from a complete set of observations: low clinical risk.",
+            "fact": 2
+          }
+        ],
+        "news2": {
+          "total": 0,
+          "complete": true,
+          "red": false,
+          "risk": "low"
+        }
+      },
+      "sent": true,
+      "attestation": {
+        "ok": true,
+        "instance": "19aea1693533dc2d529db03e3f725f20bde8d66d",
+        "composeHash": "c900dc7304663b73b623cd5d941fbdab6f02858017b371ae28de445a16d2e2d0",
+        "modelKey": "5a0210f2442c79355784f9de021985429561da5bacc3a4424b01ac52b7e0caff"
+      },
+      "model": "z-ai/glm-5.3-flash",
+      "elapsedMs": 16056,
+      "finish": "stop",
+      "usage": {
+        "prompt_tokens": 770,
+        "total_tokens": 1035,
+        "completion_tokens": 265,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "reasoning_tokens": 30,
+        "completion_tokens_details": {
+          "reasoning_tokens": 30
+        }
+      },
+      "requestBytes": 6687,
+      "inferenceId": "11fea2e6-ecfc-5776-bc6a-1c5771d2df58",
+      "replyId": "72dafb694e1346cabb5cfb86dfcab282",
+      "text": "{\"lead\":{\"explanation\":\"Slowly progressive proximal (hip and shoulder) weakness in an adult with two reported GAA variants fits late-onset Pompe disease, but the lab did not establish that the variants are on different copies of the gene, and no enzyme result is available.\",\"confidence\":\"moderate\",\"facts\":[1,3,4]},\"gaps\":[{\"gap\":\"Phase not established: the source does not show whether the two GAA variants sit on different copies of the gene.\",\"facts\":[4]},{\"gap\":\"No GAA enzyme activity result, so the biochemical diagnosis is unconfirmed.\",\"facts\":[4]}],\"next_check\":{\"type\":\"test\",\"check\":\"GAA enzyme activity assay (acid alpha-glucosidase), ideally on a dried blood spot with lymphocyte confirmation, covering enzyme activity level to confirm the reported GAA findings functionally.\",\"why\":\"Confirms a functional GAA defect supporting Pompe disease as the explanation for the proximal weakness.\",\"facts\":[3,4],\"cannot_show\":\"It cannot establish whether the two variants are on different copies of the gene, and it cannot show the cause of weakness if enzyme activity is normal.\"}}",
+      "brief": {
+        "lead": {
+          "explanation": "Slowly progressive proximal (hip and shoulder) weakness in an adult with two reported GAA variants fits late-onset Pompe disease, but the lab did not establish that the variants are on different copies of the gene, and no enzyme result is available.",
+          "confidence": "moderate",
+          "facts": [
+            1,
+            3,
+            4
+          ]
+        },
+        "gaps": [
+          {
+            "gap": "Phase not established: the source does not show whether the two GAA variants sit on different copies of the gene.",
+            "facts": [
+              4
+            ]
+          },
+          {
+            "gap": "No GAA enzyme activity result, so the biochemical diagnosis is unconfirmed.",
+            "facts": [
+              4
+            ]
+          }
+        ],
+        "next_check": {
+          "type": "test",
+          "check": "GAA enzyme activity assay (acid alpha-glucosidase), ideally on a dried blood spot with lymphocyte confirmation, covering enzyme activity level to confirm the reported GAA findings functionally.",
+          "why": "Confirms a functional GAA defect supporting Pompe disease as the explanation for the proximal weakness.",
+          "facts": [
+            3,
+            4
+          ],
+          "cannot_show": "It cannot establish whether the two variants are on different copies of the gene, and it cannot show the cause of weakness if enzyme activity is normal."
+        }
+      },
+      "sourceClassifications": [
+        {
+          "variant": "GAA c.-32-13T>G",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        },
+        {
+          "variant": "GAA c.2560C>T (p.Arg854Ter)",
+          "classification": "pathogenic",
+          "fact": 3,
+          "source": "Genetics lab report, 6 Nov 2026"
+        }
+      ],
+      "sourcePhase": [
+        {
+          "phase": "not established by the lab",
+          "fact": 4,
+          "source": "Genetics lab report, 6 Nov 2026: limitations"
+        }
+      ],
+      "briefChecks": [
+        {
+          "id": "shape",
+          "label": "One JSON brief in the agreed shape",
+          "ok": true,
+          "detail": "A lead (or none), the gaps and the next check."
+        },
+        {
+          "id": "one-check",
+          "label": "Exactly one next check, with its reason and its limits",
+          "ok": true,
+          "detail": "A test, why it comes next, and what it cannot show."
+        },
+        {
+          "id": "cited",
+          "label": "Every point cites this case's numbered facts",
+          "ok": true,
+          "detail": "Each part cites facts between 1 and 5."
+        },
+        {
+          "id": "lead",
+          "label": "A lead, if any, states its confidence",
+          "ok": true,
+          "detail": "Offered as a possibility, with moderate confidence."
+        },
+        {
+          "id": "classes",
+          "label": "Variant classifications come only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves variant classifications to the source report."
+        },
+        {
+          "id": "phase",
+          "label": "Phase comes only from the source report",
+          "ok": true,
+          "detail": "The generated brief leaves phase to the source report."
+        }
+      ],
+      "flags": [],
+      "signature": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "sig-text",
+            "ok": true
+          },
+          {
+            "id": "sig-key",
+            "ok": true
+          }
+        ]
+      },
+      "got": "lead",
+      "matchesExpect": true,
+      "costUsd": 0.000141876
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 // The page. Everything here runs in the browser: the urgency rules, the hardware check, encrypting the facts,
 // decrypting the brief, checking it and checking its signature. The server only relays ciphertext.
-import { CASES, factText, sourceClassifications } from '../src/cases/cases.mjs';
+import { CASES, factText, sourceClassifications, sourcePhase } from '../src/cases/cases.mjs';
 import { assessUrgency, NEWS2_SOURCE } from '../src/triage/urgency.mjs';
 import { verifyModelAttestation, newNonce } from '../src/tee/attestation.mjs';
 import { quoteVerifier, gpuVerifier } from '../src/tee/hardware.mjs';
@@ -252,14 +252,17 @@ async function fetchSignature(id, standInHashes) {
 
 const TYPE_LABEL = { test: 'A test', evidence: 'Gather evidence', handover: 'Hand over now' };
 
-function renderBrief(brief, classifications) {
+function renderBrief(brief, { classifications, phase }) {
   const nc = brief.next_check;
   const lead = brief.lead;
   return el('div', { class: 'brief' },
-    classifications.length ? el('section', { class: 'gaps' },
-      el('p', { class: 'overline', text: 'Variant classifications from the lab report' }),
-      el('ul', {}, classifications.map(({ variant, classification, fact, source }) =>
-        el('li', {}, el('strong', { text: variant }), ` · ${classification}`, factChips([fact]), el('div', { class: 'muted', text: source }))),
+    classifications.length || phase.length ? el('section', { class: 'gaps' },
+      el('p', { class: 'overline', text: 'From the lab report, not the model' }),
+      el('ul', {},
+        classifications.map(({ variant, classification, fact, source }) =>
+          el('li', {}, el('strong', { text: variant }), ` · ${classification}`, factChips([fact]), el('div', { class: 'muted', text: source }))),
+        phase.map(({ phase: p, fact, source }) =>
+          el('li', {}, el('strong', { text: 'Phase' }), ` · ${p}`, factChips([fact]), el('div', { class: 'muted', text: source }))),
       )) : null,
     el('section', { class: 'next' },
       el('p', { class: 'overline' }, 'One next check · for a clinician to review', nc.type ? el('span', { class: `type ${nc.type}`, text: TYPE_LABEL[nc.type] || nc.type }) : null),
@@ -330,7 +333,7 @@ async function sendBrief() {
       : 'The signature check failed: do not trust this reply.' }));
     if (v.ok && checked.ok && choice?.finish_reason !== 'length') {
       status.after(
-        renderBrief(brief, sourceClassifications(c)),
+        renderBrief(brief, { classifications: sourceClassifications(c), phase: sourcePhase(c) }),
         el('details', {}, el('summary', { text: 'The decrypted reply, exactly as the model wrote it' }), el('pre', { text })),
       );
       if (live) $('step-brief').classList.add('done');

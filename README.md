@@ -37,15 +37,15 @@ You need Node 20.19 or later. Steps 1 to 5 need no key.
 | Do | See |
 |---|---|
 | 1. `npm install` | 5 runtime packages, listed under [Built with](#built-with) |
-| 2. `npm test` | 51 tests pass. They cover:<br>• the urgency rules against NEWS2's published bands;<br>• the brief checks, including a misstated brief from a real run;<br>• the cases;<br>• NEAR AI's encryption test vector;<br>• saved hardware reports and tampered copies of them;<br>• a full encrypted exchange through the relay. |
+| 2. `npm test` | 54 tests pass. They cover:<br>• the urgency rules against NEWS2's published bands;<br>• the brief checks, including a misstated brief from a real run;<br>• the cases;<br>• NEAR AI's encryption test vector;<br>• saved hardware reports and tampered copies of them;<br>• a full encrypted exchange through the relay. |
 | 3. `npm run brief -- --case D` | The urgent case stops at the rules, with NEWS2 15, four red scores and a potassium result the lab flagged as critical. Nothing is sent |
 | 4. `npm run verify-tee` | A fresh hardware report for the model, fetched with a new nonce and checked on your computer, each check marked PASS or FAIL |
 | 5. `npm start`, then open http://localhost:8788 | The page in **stand-in mode**: the hardware check runs live, and a local stand-in answers, labelled as unattested |
-| 6. `NEARAI_API_KEY=… npm start`, open http://localhost:8788 and pick **case B** | The page goes through, in order:<br>• the facts, each with its source, and the lab report's classification of each GAA variant;<br>• the urgency rules: NEWS2 0 from a complete set, so the case may go on;<br>• **Check the hardware**: Intel's signature over the TDX quote, the nonce and model key inside it, the measured software, NVIDIA's verdict on the GPUs, and NEAR's gateway;<br>• **Encrypt and send**: the ciphertext our server and NEAR's gateway see, then the brief;<br>• every check on the brief, and the signature verified against the attested key. |
+| 6. `NEARAI_API_KEY=… npm start`, open http://localhost:8788 and pick **case B** | The page goes through, in order:<br>• the facts, each with its source, and the lab report's classification of each GAA variant;<br>• the urgency rules: NEWS2 0 from a complete set, so the case may go on;<br>• **Check the hardware**: Intel's signature over the TDX quote, the nonce and model key inside it, the measured software, NVIDIA's verdict on the GPUs, and NEAR's gateway;<br>• **Encrypt and send**: the ciphertext our server and NEAR's gateway see;<br>• every check on the brief, and the signature verified against the attested key;<br>• only then, the brief. Next to it are the classifications and the phase finding, taken from the lab report, not from the model. |
 | 7. On the same page, pick **case D** | The rules stop it and say to hand over to the treating team now. **Encrypt and send** stays off |
 | 8. `NEARAI_API_KEY=… npm run brief -- --case A,B,C,D --json checks/run.json` | The whole flow in the terminal: each check printed, a record saved, and what NEAR AI's billing charged |
 
-A key comes from [cloud.near.ai](https://cloud.near.ai). On 12 Nov 2026, NEAR AI's billing charged $0.00013 to $0.00017 a brief, for 600 to 720 tokens in and 150 to 250 out.
+A key comes from [cloud.near.ai](https://cloud.near.ai). On 12 and 13 Nov 2026, NEAR AI's billing charged $0.00013 to $0.00020 a brief, for 600 to 770 tokens in and 150 to 300 out.
 
 ## What NEAR does here
 
@@ -97,7 +97,8 @@ the attested key; only then shows the brief
   - one to three gaps;
   - every point citing this case's fact numbers;
   - a lead, if any, with a confidence of low, moderate or high;
-  - no variant classification words in the generated text. The page shows each variant's classification from the lab report itself.
+  - no variant classification words in the generated text. The page shows each variant's classification from the lab report itself;
+  - no phase terms in the generated text: in trans, in cis, compound heterozygous or biallelic. The page shows phase from the lab report too.
 
   It raises four flags. They are word patterns, not guarantees:
   - wording about a dose or a treatment step;
@@ -122,26 +123,33 @@ Every person, date, letter and result is invented. None is a real patient or a p
 | C. A 9-year-old who tires during sports | Too little evidence for a lead | Clear: the intake nurse confirmed the child is otherwise well | No lead. A history and examination before any genetic test |
 | D. A 23-year-old, confused after a long run | An urgent presentation | **Stop**: NEWS2 15 with four red scores, and a result the lab flagged as critical | None. The case goes to the treating team, and no AI is asked |
 
-## What the checks showed on 12 Nov 2026
+## What the checks showed on 12 and 13 Nov 2026
 
 The runs are saved in [`checks/`](checks/). In these records, `modelKey` is the model's public signing key, taken from the hardware report.
 - **Hardware.** Every attestation check passed for `z-ai/glm-5.3-flash` in every run. That covers Intel's signature over the TDX quote, the nonce and model key inside it, the measured software, NVIDIA's verdict, and NEAR's gateway.
 - **Cases A, B and C.**
-  - Each request carried 5.3 to 6.2 kB of ciphertext.
-  - The briefs took the path each case shows, passed every brief check, and had signatures that verified against the attested key over the exact request and reply.
+  - Each request carried 5.3 to 6.7 kB of ciphertext.
+  - Every signature verified against the attested key, over the exact request and reply.
+  - On 12 Nov, every brief took the path its case shows and passed every brief check of that run.
 - **Case D.** The rules stopped it, and nothing was sent.
 - **Case D without the rules (comparison only, `--no-gate`).** Sent once, the model also proposed a handover. That comes from its instructions, a second line of defence. The page does not rely on it; the fixed rules come first.
 - **One miss, and the fix.** In the second run, case B's lead called one of the two GAA variants "likely pathogenic", though the lab report gives both as pathogenic. Every citation was valid, so every check passed.
   - A first fix failed briefs that stated a class no fact gives. It could still pass two genuine labels swapped between the variants.
   - Now the generated text may not use classification words at all, and the page shows each variant's classification straight from the numbered lab-report fact.
   - The misstatement and a swap are regression tests. The [rerun](checks/2026-11-12-source-classifications-run.json) passed A, B and C with verified signatures and stopped D before inference.
-- **A known gap.** In that rerun, B's lead still said the variants were "in trans" while noting that phase is unconfirmed. The lab report does not establish phase. No check catches that kind of factual slip: the clinician has to.
+- **A second miss, and its fix.** In that rerun, B's lead called the two variants "in trans", while also noting that phase was unconfirmed. The lab report does not establish phase.
+  - Now phase terms stay out of the generated text too, even negated, and the page shows phase from the lab report.
+  - The 13 Nov [rerun](checks/2026-11-13-phase-check-run.json) sent A and C once and B six times, and stopped D.
+  - Five of the six B briefs passed every check with verified signatures. Each said the report does not establish whether the variants are on different copies of the gene.
+  - The sixth was rejected for writing "biallelic disease is not confirmed". The check is strict, so it also rejects a correct sentence that uses a phase term. The page does not show a rejected brief.
+  - The check catches the standard terms only. A claim about phase in plain words would pass it; none of the six made one.
 
 These checks cover how the brief is produced and whether each point traces to a fact. **They do not show that the advice is right.** The cases come from an exploratory four-case model test with provisional author scores and no specialist review. Showing that the brief helps a clinician choose a safe, useful next check would need a study with clinicians, against a protocol they agree.
 
 ## What this does not show
 
 - **That the advice is right.** The clinician decides. The checks only make each point traceable to the facts, and make the limits explicit.
+- **That every statement in a brief is true.** The class and phase checks catch standard terms. A claim in plain words, a wrong count or a wrong value would pass them, so the clinician still reads every sentence.
 - **That the urgency rules are complete.** They check what they read and nothing else:
   - NEWS2 is for adults and reads observations, not blood results;
   - it is used here without SpO2 scale 2, and not in pregnancy;

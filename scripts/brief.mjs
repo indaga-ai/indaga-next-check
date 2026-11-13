@@ -7,7 +7,7 @@
 // (Intel and NVIDIA included), encrypts the facts to the attested key, decrypts the reply, checks the brief and
 // checks the signature. Exit code 0 means every check on every case passed.
 import { writeFileSync } from 'node:fs';
-import { CASES, caseById, factText, sourceClassifications } from '../src/cases/cases.mjs';
+import { CASES, caseById, factText, sourceClassifications, sourcePhase } from '../src/cases/cases.mjs';
 import { assessUrgency } from '../src/triage/urgency.mjs';
 import { verifyModelAttestation, newNonce } from '../src/tee/attestation.mjs';
 import { quoteVerifier, gpuVerifier } from '../src/tee/hardware.mjs';
@@ -109,11 +109,13 @@ for (const c of cases) {
     const checked = brief ? checkBrief(brief, c, gate) : { ok: false, checks: [{ id: 'shape', label: 'One JSON brief in the agreed shape', ok: false, detail: error }], flags: [] };
     record.brief = brief;
     record.sourceClassifications = sourceClassifications(c);
+    record.sourcePhase = sourcePhase(c);
     const accepted = checked.ok && out.signature.ok && out.finish !== 'length';
     if (accepted) {
       for (const { variant, classification, fact } of record.sourceClassifications) {
         console.log(`   Source report (fact ${fact}): ${variant} · ${classification}`);
       }
+      for (const { phase, fact } of record.sourcePhase) console.log(`   Source report (fact ${fact}): phase · ${phase}`);
       console.log(indent(out.text));
     } else {
       console.log('   Reply rejected. See the checks below.');

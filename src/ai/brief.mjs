@@ -1,6 +1,6 @@
 // Reads the model's reply and checks it on the page. The checks are about form and traceability: one JSON brief,
 // exactly one next check, every point tied to real fact numbers, a lead that says how confident it is, and no
-// model-written variant classifications. They cannot judge whether the medicine is right; that is the
+// model-written variant classifications or phase. They cannot judge whether the medicine is right; that is the
 // clinician's review, and the page says so.
 // Flags point a reviewer at wording that needs a closer look. They are word patterns, not guarantees.
 
@@ -51,6 +51,10 @@ const SETTLED = [
 // aliases out of generated text entirely, including where the source uses the same term.
 const CLASS_WORDING = /\b(?:pathogenic|benign|(?:uncertain|unknown)[\s-]+significance|VUS|VOUS|disease[\s-]+causing)\b/i;
 const CLASS_CODES = /\b(?:LP|LB|ACMG[\s-]+(?:class[\s-]+)?[1-5])\b/;
+// Phase (whether two variants sit on different copies of a gene) is also shown from the source report. Its
+// standard terms stay out of generated text, even negated: a live brief once called two variants "in trans"
+// although the lab had not established phase. A plain-words claim about phase is not caught here.
+const PHASE_WORDING = /\b(?:in[\s-]+trans|in[\s-]+cis|compound[\s-]+heterozyg\w*|bi-?allelic|(?:trans|cis)[\s-]+(?:configuration|phase|position|arrangement))\b/i;
 
 function allText(brief) {
   const out = [];
@@ -108,6 +112,14 @@ export function checkBrief(brief, c, gate = null) {
     detail: !shapeOk ? 'No brief to read.'
       : classWording ? 'The generated brief uses variant classification wording. Use the source report for classifications.'
         : 'The generated brief leaves variant classifications to the source report.',
+  });
+
+  const phaseWording = PHASE_WORDING.test(text);
+  checks.push({
+    id: 'phase', label: 'Phase comes only from the source report', ok: shapeOk && !phaseWording,
+    detail: !shapeOk ? 'No brief to read.'
+      : phaseWording ? 'The generated brief uses phase wording (in trans, in cis, compound heterozygous or biallelic). Use the source report for phase.'
+        : 'The generated brief leaves phase to the source report.',
   });
 
   const flags = [];

@@ -9,6 +9,7 @@
 //   stable           a named clinician confirmed the person is not acutely unwell; `fact` names the fact that says so
 //   fact.critical    the lab itself flagged this result as critical
 //   fact.variantClassifications  each exact variant and its classification, transcribed from this source report
+//   fact.phase       what this source report says about the variants' phase (whether they are on different copies)
 //   shows / expect   what the case demonstrates; never sent, never used by the rules
 
 export const CASES = [
@@ -50,7 +51,7 @@ export const CASES = [
           { variant: 'GAA c.2560C>T (p.Arg854Ter)', classification: 'pathogenic' },
         ],
       },
-      { n: 4, text: 'The lab did not establish whether the two variants are on different copies of the gene (phase). No GAA enzyme activity result is available.', source: 'Genetics lab report, 6 Nov 2026: limitations' },
+      { n: 4, text: 'The lab did not establish whether the two variants are on different copies of the gene (phase). No GAA enzyme activity result is available.', source: 'Genetics lab report, 6 Nov 2026: limitations', phase: 'not established by the lab' },
       { n: 5, text: 'There is no new shortness of breath and no recent sudden worsening.', source: 'Neurology clinic letter, 30 Oct 2026' },
     ],
   },
@@ -95,6 +96,11 @@ export function sourceClassifications(c) {
   return c.facts.flatMap((fact) => (fact.variantClassifications ?? []).map(({ variant, classification }) => ({
     variant, classification, fact: fact.n, source: fact.source,
   })));
+}
+
+/** What the source report says about phase, copied from the case facts, never the generated reply. */
+export function sourcePhase(c) {
+  return c.facts.filter((fact) => fact.phase).map((fact) => ({ phase: fact.phase, fact: fact.n, source: fact.source }));
 }
 
 export function factText(fact) {
